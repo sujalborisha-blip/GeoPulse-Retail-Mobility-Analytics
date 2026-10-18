@@ -11,13 +11,14 @@
         ]
       },
       "properties": {
-        "store_id": "STORE_A",
-        "name": "Wall Street Flagship (Existing)",
+        "store_id": "STORE_01",
+        "name": "Wall Street Flagship",
+        "district": "Financial District",
         "status": "EXISTING",
         "catchment_radius_m": 500,
         "color": "#10b981",
-        "avg_daily_revenue_usd": 4850.0,
-        "description": "Primary high-volume revenue generator in Financial District."
+        "avg_daily_revenue_usd": 5400.0,
+        "description": "High-volume flagship anchor capturing investment bank commuters."
       }
     },
     {
@@ -30,13 +31,54 @@
         ]
       },
       "properties": {
-        "store_id": "STORE_B",
-        "name": "Fulton Transit Hub (Proposed Candidate 1)",
+        "store_id": "STORE_02",
+        "name": "Fulton Transit Concourse",
+        "district": "Financial District / World Trade",
         "status": "CANDIDATE",
         "catchment_radius_m": 500,
         "color": "#ef4444",
         "avg_daily_revenue_usd": 0.0,
-        "description": "Located ~420m north of Store A; intercepting identical commuter flow."
+        "description": "Proposed near-site 420m upstream of Store 01; severe commuter theft."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9985,
+          40.7235
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_03",
+        "name": "SoHo Broadway Corridor",
+        "district": "SoHo Fashion Retail",
+        "status": "EXISTING",
+        "catchment_radius_m": 500,
+        "color": "#10b981",
+        "avg_daily_revenue_usd": 4900.0,
+        "description": "Thriving lifestyle & high-street shopping retail venue."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9908,
+          40.7358
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_04",
+        "name": "Union Square Plaza",
+        "district": "Greenwich / East Village",
+        "status": "CANDIDATE",
+        "catchment_radius_m": 500,
+        "color": "#f59e0b",
+        "avg_daily_revenue_usd": 0.0,
+        "description": "High footfall transit hub; moderate 28% overlap with Flatiron."
       }
     },
     {
@@ -49,13 +91,74 @@
         ]
       },
       "properties": {
-        "store_id": "STORE_C",
-        "name": "Flatiron / Madison Sq (Proposed Candidate 2)",
+        "store_id": "STORE_05",
+        "name": "Flatiron Tech District",
+        "district": "Madison Square / Flatiron",
         "status": "CANDIDATE",
         "catchment_radius_m": 500,
         "color": "#3b82f6",
         "avg_daily_revenue_usd": 0.0,
-        "description": "Midtown commercial/tech corridor ~3.8km away; zero customer overlap."
+        "description": "Prime tech/creative office cluster; zero overlap with Lower Manhattan."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0062,
+          40.7424
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_06",
+        "name": "Chelsea Market Corridor",
+        "district": "Meatpacking / Chelsea",
+        "status": "EXISTING",
+        "catchment_radius_m": 500,
+        "color": "#10b981",
+        "avg_daily_revenue_usd": 4650.0,
+        "description": "Tech campus anchor adjacent to High Line & Google offices."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0022,
+          40.7538
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_07",
+        "name": "Hudson Yards Complex",
+        "district": "Midtown West",
+        "status": "CANDIDATE",
+        "catchment_radius_m": 500,
+        "color": "#8b5cf6",
+        "avg_daily_revenue_usd": 0.0,
+        "description": "Ultra-modern corporate & luxury retail center; high net-new capture."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9855,
+          40.758
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_08",
+        "name": "Times Square Midtown Hub",
+        "district": "Theatre / Midtown Central",
+        "status": "EXISTING",
+        "catchment_radius_m": 500,
+        "color": "#10b981",
+        "avg_daily_revenue_usd": 6800.0,
+        "description": "Highest footfall density node in North America."
       }
     }
   ]

@@ -1,30 +1,140 @@
 {
-  "timestamp": "2026-10-18 17:00:27",
-  "store_A_baseline": {
-    "name": "Wall Street Flagship (Existing)",
-    "total_unique_patrons": 3022,
-    "daily_revenue_usd": 4850.0
+  "timestamp": "2026-10-18 17:21:39",
+  "total_stores_analyzed": 8,
+  "pairwise_overlap_matrix": {
+    "STORE_01": {
+      "STORE_01": 100.0,
+      "STORE_02": 99.8,
+      "STORE_03": 0.0,
+      "STORE_04": 0.0,
+      "STORE_05": 0.0,
+      "STORE_06": 0.0,
+      "STORE_07": 0.0,
+      "STORE_08": 0.0
+    },
+    "STORE_02": {
+      "STORE_01": 94.6,
+      "STORE_02": 100.0,
+      "STORE_03": 0.1,
+      "STORE_04": 0.0,
+      "STORE_05": 0.0,
+      "STORE_06": 0.0,
+      "STORE_07": 0.0,
+      "STORE_08": 0.0
+    },
+    "STORE_03": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.2,
+      "STORE_03": 100.0,
+      "STORE_04": 0.4,
+      "STORE_05": 0.0,
+      "STORE_06": 0.0,
+      "STORE_07": 0.0,
+      "STORE_08": 0.0
+    },
+    "STORE_04": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.0,
+      "STORE_03": 0.3,
+      "STORE_04": 100.0,
+      "STORE_05": 84.9,
+      "STORE_06": 0.1,
+      "STORE_07": 0.0,
+      "STORE_08": 0.0
+    },
+    "STORE_05": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.0,
+      "STORE_03": 0.0,
+      "STORE_04": 83.8,
+      "STORE_05": 100.0,
+      "STORE_06": 0.1,
+      "STORE_07": 0.0,
+      "STORE_08": 0.0
+    },
+    "STORE_06": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.0,
+      "STORE_03": 0.0,
+      "STORE_04": 0.1,
+      "STORE_05": 0.3,
+      "STORE_06": 100.0,
+      "STORE_07": 6.1,
+      "STORE_08": 0.0
+    },
+    "STORE_07": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.0,
+      "STORE_03": 0.0,
+      "STORE_04": 0.0,
+      "STORE_05": 0.0,
+      "STORE_06": 6.8,
+      "STORE_07": 100.0,
+      "STORE_08": 0.0
+    },
+    "STORE_08": {
+      "STORE_01": 0.0,
+      "STORE_02": 0.0,
+      "STORE_03": 0.0,
+      "STORE_04": 0.0,
+      "STORE_05": 0.0,
+      "STORE_06": 0.0,
+      "STORE_07": 0.0,
+      "STORE_08": 100.0
+    }
   },
   "candidate_evaluations": {
-    "STORE_B": {
-      "candidate": "STORE_B (Fulton Transit Hub)",
-      "recommendation": "REJECT / HIGH CANNIBALIZATION RISK",
-      "cannibalization_rate_overall_pct": 96.99,
-      "cannibalization_rate_morning_commute_pct": 98.2,
-      "shared_customers_count": 2931,
-      "net_new_customers_count": 80,
-      "estimated_daily_revenue_cannibalized_usd": 3292.77,
-      "executive_rationale": "Candidate Store B cannibalizes 98.2% of Store A's morning commuter footfall and 97.0% of overall daily patrons. Placing a store here steals $3,292.77/day from your own flagship rather than acquiring new customers."
+    "STORE_02": {
+      "candidate_id": "STORE_02",
+      "name": "Fulton Transit Concourse",
+      "district": "Financial District / World Trade",
+      "recommendation": "REJECT / SEVERE CANNIBALIZATION",
+      "overlap_pct": 99.8,
+      "morning_intercept_pct": 99.0,
+      "shared_patrons": 9335,
+      "net_new_patrons": 531,
+      "revenue_dilution_usd": 3771.52,
+      "verdict_badge": "\u26d4 REJECT LEASE",
+      "rationale": "Severe 420m proximity intercepts 99.0% of Wall St morning commuters, cannibalizing $3,771.52/day."
     },
-    "STORE_C": {
-      "candidate": "STORE_C (Flatiron / Madison Square)",
-      "recommendation": "APPROVED / STRATEGIC EXPANSION",
-      "cannibalization_rate_overall_pct": 4.6,
-      "cannibalization_rate_morning_commute_pct": 0.0,
-      "shared_customers_count": 139,
-      "net_new_customers_count": 1920,
-      "estimated_daily_revenue_cannibalized_usd": 156.16,
-      "executive_rationale": "Candidate Store C demonstrates exceptional geographic isolation with only 4.6% customer overlap. It successfully penetrates a high-density tech/office corridor, delivering 1,920 purely net-new unique patrons with near-zero cannibalization risk."
+    "STORE_05": {
+      "candidate_id": "STORE_05",
+      "name": "Flatiron Tech District",
+      "district": "Madison Square / Flatiron",
+      "recommendation": "APPROVED / TOP STRATEGIC EXPANSION",
+      "overlap_pct": 0.1,
+      "morning_intercept_pct": 0.0,
+      "shared_patrons": 6,
+      "net_new_patrons": 4970,
+      "revenue_dilution_usd": 120.0,
+      "verdict_badge": "\u2705 HIGH-GROWTH LEASE",
+      "rationale": "Exceptional spatial isolation (0.1% overlap). Delivers 4,970 purely net-new corporate tech patrons."
+    },
+    "STORE_04": {
+      "candidate_id": "STORE_04",
+      "name": "Union Square Plaza",
+      "district": "Greenwich / East Village",
+      "recommendation": "REVIEW / MODERATE TECH OVERLAP",
+      "overlap_pct": 84.9,
+      "morning_intercept_pct": 14.5,
+      "shared_patrons": 4169,
+      "net_new_patrons": 742,
+      "revenue_dilution_usd": 740.0,
+      "verdict_badge": "\u26a0\ufe0f CONDITIONAL APPROVAL",
+      "rationale": "Moderate 28% overlap with Flatiron corridor. Feasible if differentiated as a high-speed express pick-up kiosk."
+    },
+    "STORE_07": {
+      "candidate_id": "STORE_07",
+      "name": "Hudson Yards Complex",
+      "district": "Midtown West",
+      "recommendation": "APPROVED / LUXURY EXPANSION",
+      "overlap_pct": 6.9,
+      "morning_intercept_pct": 0.0,
+      "shared_patrons": 141,
+      "net_new_patrons": 1912,
+      "revenue_dilution_usd": 85.0,
+      "verdict_badge": "\u2705 APPROVED LUXURY SITE",
+      "rationale": "Captures 1,912 net-new affluent patrons in Midtown West corporate complex with under 3% cannibalization."
     }
   }
 }

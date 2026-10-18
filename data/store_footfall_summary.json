@@ -1,35 +1,98 @@
 {
-  "STORE_A": {
-    "name": "Wall Street Flagship (Existing)",
+  "STORE_01": {
+    "name": "Wall Street Flagship",
+    "district": "Financial District",
     "status": "EXISTING",
-    "total_catchment_pings": 41792,
-    "total_unique_visitors": 3022,
+    "total_catchment_pings": 151301,
+    "total_unique_visitors": 9356,
     "peak_hour": "08:00",
-    "peak_hour_visitors": 2375,
-    "morning_rush_visitors": 2777,
-    "lunch_rush_visitors": 2801,
-    "evening_rush_visitors": 2520
+    "peak_hour_visitors": 7323,
+    "morning_rush_visitors": 8645,
+    "lunch_rush_visitors": 8872,
+    "evening_rush_visitors": 8080
   },
-  "STORE_B": {
-    "name": "Fulton Transit Hub (Proposed Candidate 1)",
+  "STORE_02": {
+    "name": "Fulton Transit Concourse",
+    "district": "Financial District / World Trade",
     "status": "CANDIDATE",
-    "total_catchment_pings": 41731,
-    "total_unique_visitors": 3011,
+    "total_catchment_pings": 151026,
+    "total_unique_visitors": 9866,
     "peak_hour": "08:00",
-    "peak_hour_visitors": 2369,
-    "morning_rush_visitors": 2782,
-    "lunch_rush_visitors": 2785,
-    "evening_rush_visitors": 2744
+    "peak_hour_visitors": 8395,
+    "morning_rush_visitors": 9646,
+    "lunch_rush_visitors": 9603,
+    "evening_rush_visitors": 7813
   },
-  "STORE_C": {
-    "name": "Flatiron / Madison Sq (Proposed Candidate 2)",
+  "STORE_03": {
+    "name": "SoHo Broadway Corridor",
+    "district": "SoHo Fashion Retail",
+    "status": "EXISTING",
+    "total_catchment_pings": 51306,
+    "total_unique_visitors": 3063,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 2444,
+    "morning_rush_visitors": 2911,
+    "lunch_rush_visitors": 2934,
+    "evening_rush_visitors": 2815
+  },
+  "STORE_04": {
+    "name": "Union Square Plaza",
+    "district": "Greenwich / East Village",
     "status": "CANDIDATE",
-    "total_catchment_pings": 20052,
-    "total_unique_visitors": 2059,
-    "peak_hour": "12:00",
-    "peak_hour_visitors": 1520,
-    "morning_rush_visitors": 1416,
-    "lunch_rush_visitors": 1886,
-    "evening_rush_visitors": 1317
+    "total_catchment_pings": 66891,
+    "total_unique_visitors": 4911,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 3324,
+    "morning_rush_visitors": 4201,
+    "lunch_rush_visitors": 4406,
+    "evening_rush_visitors": 4010
+  },
+  "STORE_05": {
+    "name": "Flatiron Tech District",
+    "district": "Madison Square / Flatiron",
+    "status": "CANDIDATE",
+    "total_catchment_pings": 69664,
+    "total_unique_visitors": 4976,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 3456,
+    "morning_rush_visitors": 4337,
+    "lunch_rush_visitors": 4509,
+    "evening_rush_visitors": 4130
+  },
+  "STORE_06": {
+    "name": "Chelsea Market Corridor",
+    "district": "Meatpacking / Chelsea",
+    "status": "EXISTING",
+    "total_catchment_pings": 37605,
+    "total_unique_visitors": 2292,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 1807,
+    "morning_rush_visitors": 2137,
+    "lunch_rush_visitors": 2195,
+    "evening_rush_visitors": 2075
+  },
+  "STORE_07": {
+    "name": "Hudson Yards Complex",
+    "district": "Midtown West",
+    "status": "CANDIDATE",
+    "total_catchment_pings": 33829,
+    "total_unique_visitors": 2053,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 1580,
+    "morning_rush_visitors": 1908,
+    "lunch_rush_visitors": 1945,
+    "evening_rush_visitors": 1852
+  },
+  "STORE_08": {
+    "name": "Times Square Midtown Hub",
+    "district": "Theatre / Midtown Central",
+    "status": "EXISTING",
+    "total_catchment_pings": 34333,
+    "total_unique_visitors": 2022,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 1623,
+    "morning_rush_visitors": 1927,
+    "lunch_rush_visitors": 1932,
+    "evening_rush_visitors": 1879
   }
 }
