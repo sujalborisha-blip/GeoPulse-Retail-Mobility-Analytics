@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.009,
+          40.7075
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_A",
+        "name": "Wall Street Flagship (Existing)",
+        "status": "EXISTING",
+        "catchment_radius_m": 500,
+        "color": "#10b981",
+        "avg_daily_revenue_usd": 4850.0,
+        "description": "Primary high-volume revenue generator in Financial District."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.008,
+          40.7112
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_B",
+        "name": "Fulton Transit Hub (Proposed Candidate 1)",
+        "status": "CANDIDATE",
+        "catchment_radius_m": 500,
+        "color": "#ef4444",
+        "avg_daily_revenue_usd": 0.0,
+        "description": "Located ~420m north of Store A; intercepting identical commuter flow."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9897,
+          40.741
+        ]
+      },
+      "properties": {
+        "store_id": "STORE_C",
+        "name": "Flatiron / Madison Sq (Proposed Candidate 2)",
+        "status": "CANDIDATE",
+        "catchment_radius_m": 500,
+        "color": "#3b82f6",
+        "avg_daily_revenue_usd": 0.0,
+        "description": "Midtown commercial/tech corridor ~3.8km away; zero customer overlap."
+      }
+    }
+  ]
+}

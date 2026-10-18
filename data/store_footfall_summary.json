@@ -1,0 +1,35 @@
+{
+  "STORE_A": {
+    "name": "Wall Street Flagship (Existing)",
+    "status": "EXISTING",
+    "total_catchment_pings": 41792,
+    "total_unique_visitors": 3022,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 2375,
+    "morning_rush_visitors": 2777,
+    "lunch_rush_visitors": 2801,
+    "evening_rush_visitors": 2520
+  },
+  "STORE_B": {
+    "name": "Fulton Transit Hub (Proposed Candidate 1)",
+    "status": "CANDIDATE",
+    "total_catchment_pings": 41731,
+    "total_unique_visitors": 3011,
+    "peak_hour": "08:00",
+    "peak_hour_visitors": 2369,
+    "morning_rush_visitors": 2782,
+    "lunch_rush_visitors": 2785,
+    "evening_rush_visitors": 2744
+  },
+  "STORE_C": {
+    "name": "Flatiron / Madison Sq (Proposed Candidate 2)",
+    "status": "CANDIDATE",
+    "total_catchment_pings": 20052,
+    "total_unique_visitors": 2059,
+    "peak_hour": "12:00",
+    "peak_hour_visitors": 1520,
+    "morning_rush_visitors": 1416,
+    "lunch_rush_visitors": 1886,
+    "evening_rush_visitors": 1317
+  }
+}

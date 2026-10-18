@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-10-18 17:00:27",
+  "store_A_baseline": {
+    "name": "Wall Street Flagship (Existing)",
+    "total_unique_patrons": 3022,
+    "daily_revenue_usd": 4850.0
+  },
+  "candidate_evaluations": {
+    "STORE_B": {
+      "candidate": "STORE_B (Fulton Transit Hub)",
+      "recommendation": "REJECT / HIGH CANNIBALIZATION RISK",
+      "cannibalization_rate_overall_pct": 96.99,
+      "cannibalization_rate_morning_commute_pct": 98.2,
+      "shared_customers_count": 2931,
+      "net_new_customers_count": 80,
+      "estimated_daily_revenue_cannibalized_usd": 3292.77,
+      "executive_rationale": "Candidate Store B cannibalizes 98.2% of Store A's morning commuter footfall and 97.0% of overall daily patrons. Placing a store here steals $3,292.77/day from your own flagship rather than acquiring new customers."
+    },
+    "STORE_C": {
+      "candidate": "STORE_C (Flatiron / Madison Square)",
+      "recommendation": "APPROVED / STRATEGIC EXPANSION",
+      "cannibalization_rate_overall_pct": 4.6,
+      "cannibalization_rate_morning_commute_pct": 0.0,
+      "shared_customers_count": 139,
+      "net_new_customers_count": 1920,
+      "estimated_daily_revenue_cannibalized_usd": 156.16,
+      "executive_rationale": "Candidate Store C demonstrates exceptional geographic isolation with only 4.6% customer overlap. It successfully penetrates a high-density tech/office corridor, delivering 1,920 purely net-new unique patrons with near-zero cannibalization risk."
+    }
+  }
+}
