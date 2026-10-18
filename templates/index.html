@@ -773,6 +773,17 @@
             }
 
             loadH3Layer(currentHour);
+
+            // Synchronize active hour cursor on diurnal chart
+            if (hourlyChart) {
+                hourlyChart.setActiveElements([
+                    { datasetIndex: 0, index: currentHour },
+                    { datasetIndex: 1, index: currentHour },
+                    { datasetIndex: 2, index: currentHour },
+                    { datasetIndex: 3, index: currentHour }
+                ]);
+                hourlyChart.update('none');
+            }
         }
 
         function togglePlay() {
