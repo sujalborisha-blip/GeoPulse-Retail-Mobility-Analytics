@@ -319,11 +319,10 @@
                 zoomControl: true
             });
 
-            // CartoDB Dark Matter Tiles (Professional Cybersecurity & Geospatial dark theme)
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; CartoDB &copy; OpenStreetMap',
-                subdomains: 'abcd',
-                maxZoom: 19
+            // Esri World Dark Gray Canvas (High-resolution, free enterprise dark basemap - No API key needed)
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; Esri &mdash; World Dark Gray Base',
+                maxZoom: 16
             }).addTo(map);
 
             h3LayerGroup = L.layerGroup().addTo(map);
