@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoPulse | Hyper-Local Retail Mobility & Cannibalization Analytics</title>
+    <title>GeoPulse | Hyper-Local Retail Mobility & Cannibalization Intelligence</title>
     
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <!-- Chart.js for Trend Analysis -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Tailwind CSS (CDN) -->
@@ -19,252 +19,296 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#0b0f19',
-                        panelbg: '#111827',
-                        cardbg: '#1f2937',
-                        accentgreen: '#10b981',
-                        accentred: '#ef4444',
-                        accentblue: '#3b82f6',
-                        accentamber: '#f59e0b',
-                        accentcyan: '#06b6d4'
+                        darkbase: '#070b14',
+                        carddark: '#0f172a',
+                        cardborder: '#1e293b',
+                        cyanpulse: '#06b6d4',
+                        emeraldsafe: '#10b981',
+                        crimsondanger: '#ef4444',
+                        amberwarn: '#f59e0b'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0b0f19; color: #e5e7eb; font-family: 'Segoe UI', system-ui, sans-serif; }
-        #map { height: calc(100vh - 180px); min-height: 520px; border-radius: 12px; }
-        .leaflet-container { background: #0b0f19 !important; }
-        .glass-panel { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .pulse-dot {
-            display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-            background-color: #10b981; box-shadow: 0 0 10px #10b981;
-            animation: pulse 2s infinite;
+        body {
+            background-color: #070b14;
+            color: #f1f5f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
         }
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        .glass-header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .glass-floating {
+            background: rgba(7, 11, 20, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        #map {
+            width: 100%;
+            height: calc(100vh - 195px);
+            min-height: 580px;
+            border-radius: 14px;
+        }
+        .pulse-live {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
         }
         /* Custom timeline slider */
         input[type=range] {
             accent-color: #06b6d4;
         }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #070b14; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased">
 
-    <!-- Top Navigation & Brand Header -->
-    <header class="glass-panel px-6 py-3 border-b border-gray-800 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+    <!-- Top Navigation Header -->
+    <header class="glass-header px-6 py-2.5 sticky top-0 z-50 flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <div class="p-2 bg-cyan-950 border border-cyan-500/30 rounded-lg">
-                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+            <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
             </div>
             <div>
                 <div class="flex items-center gap-2">
-                    <h1 class="text-xl font-bold tracking-wider text-white">Geo<span class="text-cyan-400">Pulse</span></h1>
-                    <span class="px-2 py-0.5 text-xs rounded-full bg-cyan-500/20 text-cyan-300 font-semibold border border-cyan-500/30">H3 v4.5 Spatial Lakehouse</span>
+                    <h1 class="text-base font-bold text-white tracking-wide">Geo<span class="text-cyan-400">Pulse</span></h1>
+                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-800/60">Uber H3 Res-9</span>
+                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">Lakehouse Parquet</span>
                 </div>
-                <p class="text-xs text-gray-400">Hyper-Local Retail Mobility & Store Cannibalization Analytics (UrbanBean Coffee Strategy)</p>
+                <p class="text-[11px] text-gray-400">Hyper-Local Retail Mobility & Store Cannibalization Analytics (UrbanBean Coffee Strategy)</p>
             </div>
         </div>
 
-        <!-- Real-time badges -->
-        <div class="flex items-center gap-3 text-xs">
-            <div class="flex items-center gap-2 bg-gray-800/80 px-3 py-1.5 rounded-md border border-gray-700">
-                <span class="pulse-dot"></span>
-                <span class="text-gray-300 font-medium">Pipeline: <span class="text-emerald-400 font-bold">ACTIVE</span></span>
+        <!-- Status Telemetry Badges -->
+        <div class="flex items-center gap-2.5 text-xs">
+            <div class="flex items-center gap-2 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg">
+                <span class="pulse-live"></span>
+                <span class="text-gray-300 text-[11px]">Pipeline: <strong class="text-emerald-400">LIVE</strong></span>
             </div>
-            <div class="bg-gray-800/80 px-3 py-1.5 rounded-md border border-gray-700 text-gray-300">
-                Catchment: <span class="text-cyan-400 font-bold">500m Buffer</span>
+            <div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] text-gray-300">
+                Catchment: <strong class="text-cyan-400 font-mono">500m Buffer</strong>
             </div>
-            <div class="bg-gray-800/80 px-3 py-1.5 rounded-md border border-gray-700 text-gray-300">
-                Resolution: <span class="text-amber-400 font-bold">H3 Hex Res-9 (~100m)</span>
+            <div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] text-gray-300">
+                Corridor: <strong class="text-gray-200">Downtown Manhattan</strong>
             </div>
         </div>
     </header>
 
-    <!-- Executive KPI Strip -->
-    <section class="grid grid-cols-2 md:grid-cols-5 gap-3 px-6 py-3 bg-gray-950/60 border-b border-gray-800/60 text-xs">
-        <div class="glass-panel p-3 rounded-lg border-l-4 border-cyan-500">
-            <span class="text-gray-400 uppercase font-semibold">Total GPS Mobility Pings</span>
-            <div class="text-lg font-bold text-white mt-1" id="kpi-pings">119,680</div>
-            <span class="text-cyan-400 text-[10px]">24-Hour Diurnal Cycle</span>
+    <!-- Top Executive KPI Summary Row -->
+    <section class="grid grid-cols-2 md:grid-cols-5 gap-3 px-6 py-2.5 bg-slate-950/40 border-b border-slate-900">
+        <div class="glass-card p-2.5 rounded-xl border-l-4 border-cyan-500 flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Total GPS Records</span>
+            <div class="text-lg font-extrabold text-white font-mono mt-0.5" id="kpi-pings">119,680</div>
+            <span class="text-[10px] text-cyan-400/90 font-medium">24-Hour Diurnal Pings</span>
         </div>
-        <div class="glass-panel p-3 rounded-lg border-l-4 border-indigo-500">
-            <span class="text-gray-400 uppercase font-semibold">Monitored Mobile Devices</span>
-            <div class="text-lg font-bold text-white mt-1" id="kpi-devices">6,000</div>
-            <span class="text-indigo-400 text-[10px]">Anonymized Unique IDs</span>
+        <div class="glass-card p-2.5 rounded-xl border-l-4 border-indigo-500 flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tracked Mobile Devices</span>
+            <div class="text-lg font-extrabold text-indigo-300 font-mono mt-0.5" id="kpi-devices">6,000</div>
+            <span class="text-[10px] text-gray-400 font-medium">Anonymized Unique IDs</span>
         </div>
-        <div class="glass-panel p-3 rounded-lg border-l-4 border-emerald-500">
-            <span class="text-gray-400 uppercase font-semibold">Store A (Wall St Flagship)</span>
-            <div class="text-lg font-bold text-emerald-400 mt-1" id="kpi-store-a">3,022 Patrons</div>
-            <span class="text-gray-400 text-[10px]">Peak Rush: <span class="text-white font-medium" id="kpi-peak-hour">12:00 PM</span></span>
+        <div class="glass-card p-2.5 rounded-xl border-l-4 border-emerald-500 flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Store A (Wall St Flagship)</span>
+            <div class="text-lg font-extrabold text-emerald-400 font-mono mt-0.5" id="kpi-store-a">3,022 Patrons</div>
+            <span class="text-[10px] text-gray-400 font-medium">Peak Hour: <strong class="text-white" id="kpi-peak-hour">12:00 PM</strong></span>
         </div>
-        <div class="glass-panel p-3 rounded-lg border-l-4 border-red-500">
-            <span class="text-gray-400 uppercase font-semibold">Candidate B Cannibalization</span>
-            <div class="text-lg font-bold text-red-400 mt-1" id="kpi-cannibal-b">97.0% Overlap</div>
-            <span class="text-red-300 font-bold text-[10px]">CRITICAL REJECT (Morning: 98.2%)</span>
+        <div class="glass-card p-2.5 rounded-xl border-l-4 border-red-500 flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-red-400">Candidate B Overlap</span>
+            <div class="text-lg font-extrabold text-red-400 font-mono mt-0.5" id="kpi-cannibal-b">97.0% Overlap</div>
+            <span class="text-[10px] text-red-300 font-bold">⛔ REJECT (98.2% Morning Stolen)</span>
         </div>
-        <div class="glass-panel p-3 rounded-lg border-l-4 border-blue-500">
-            <span class="text-gray-400 uppercase font-semibold">Candidate C Expansion</span>
-            <div class="text-lg font-bold text-blue-400 mt-1" id="kpi-cannibal-c">+1,964 Net-New</div>
-            <span class="text-emerald-400 font-bold text-[10px]">APPROVED (4.6% Overlap)</span>
+        <div class="glass-card p-2.5 rounded-xl border-l-4 border-blue-500 flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-400">Candidate C Reach</span>
+            <div class="text-lg font-extrabold text-blue-400 font-mono mt-0.5" id="kpi-cannibal-c">+1,964 Net-New</div>
+            <span class="text-[10px] text-emerald-400 font-bold">✅ APPROVED (Clean Expansion)</span>
         </div>
     </section>
 
-    <!-- Main Analytics Body -->
-    <main class="flex-1 px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <!-- Main Workspace (Map on Left, Analytics Panel on Right) -->
+    <main class="flex-1 px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-        <!-- Left/Center Section: Interactive Map + 24-Hour Timeline Scrub (8 Cols) -->
-        <div class="lg:col-span-8 flex flex-col gap-3">
-            
-            <!-- Map Container with Floating Layer Controls -->
-            <div class="relative glass-panel rounded-xl p-2 overflow-hidden flex-1 flex flex-col">
+        <!-- Center & Map Display (7 Columns) -->
+        <div class="lg:col-span-7 flex flex-col gap-2 relative">
+            <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex-1 flex flex-col">
                 <div id="map"></div>
 
-                <!-- Floating Map Controls (Top Right) -->
-                <div class="absolute top-4 right-4 z-[1000] glass-panel p-3 rounded-lg shadow-2xl flex flex-col gap-2 text-xs">
-                    <span class="font-bold text-gray-200 border-b border-gray-700 pb-1 flex items-center gap-1">
+                <!-- Floating Top-Right Layer Selector -->
+                <div class="absolute top-3 right-3 z-[1000] glass-floating p-2.5 rounded-xl shadow-xl flex flex-col gap-1.5 text-xs">
+                    <span class="font-bold text-gray-300 text-[11px] border-b border-gray-700/80 pb-1 flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
-                        Layer Visibility
+                        Map Layers
                     </span>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white">
-                        <input type="checkbox" id="toggle-h3" checked class="rounded bg-gray-800 border-gray-600 text-cyan-500">
-                        <span>Uber H3 Heat Grid</span>
+                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                        <input type="checkbox" id="toggle-h3" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
+                        <span>Uber H3 Hex Density</span>
                     </label>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white">
-                        <input type="checkbox" id="toggle-catchments" checked class="rounded bg-gray-800 border-gray-600 text-cyan-500">
-                        <span>500m Catchment Buffers</span>
+                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                        <input type="checkbox" id="toggle-catchments" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
+                        <span>500m Catchment Areas</span>
                     </label>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white">
-                        <input type="checkbox" id="toggle-stores" checked class="rounded bg-gray-800 border-gray-600 text-cyan-500">
-                        <span>Store Pinpoints</span>
+                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                        <input type="checkbox" id="toggle-stores" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
+                        <span>Store Flags & Status</span>
                     </label>
                 </div>
 
-                <!-- Floating Legend (Bottom Left of Map) -->
-                <div class="absolute bottom-5 left-5 z-[1000] glass-panel px-3 py-2 rounded-lg shadow-xl text-[11px] flex flex-col gap-1.5">
+                <!-- Floating Bottom-Left Density Legend -->
+                <div class="absolute bottom-3 left-3 z-[1000] glass-floating px-3 py-2 rounded-xl text-[10px] flex flex-col gap-1 shadow-lg">
                     <span class="text-gray-300 font-semibold">Footfall Density (H3 Res 9)</span>
                     <div class="flex items-center gap-1">
-                        <span class="w-4 h-3 rounded" style="background:#312e81"></span>
-                        <span class="w-4 h-3 rounded" style="background:#06b6d4"></span>
-                        <span class="w-4 h-3 rounded" style="background:#10b981"></span>
-                        <span class="w-4 h-3 rounded" style="background:#f59e0b"></span>
-                        <span class="w-4 h-3 rounded" style="background:#ef4444"></span>
+                        <span class="w-4 h-2.5 rounded-sm" style="background:#312e81"></span>
+                        <span class="w-4 h-2.5 rounded-sm" style="background:#06b6d4"></span>
+                        <span class="w-4 h-2.5 rounded-sm" style="background:#10b981"></span>
+                        <span class="w-4 h-2.5 rounded-sm" style="background:#f59e0b"></span>
+                        <span class="w-4 h-2.5 rounded-sm" style="background:#ef4444"></span>
                     </div>
-                    <div class="flex justify-between text-[10px] text-gray-400">
-                        <span>Low / Quiet</span>
-                        <span>Hotspot</span>
+                    <div class="flex justify-between text-gray-400 text-[9px]">
+                        <span>Low Flow</span>
+                        <span>Peak Rush</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 24-Hour Diurnal Timeline Scrub Slider (Week 4 Core Requirement) -->
-            <div class="glass-panel p-4 rounded-xl flex flex-col gap-2">
+            <!-- Sleek 24-Hour Timeline Scrub Controller (Week 4 Core Feature) -->
+            <div class="glass-card px-4 py-3 rounded-2xl flex flex-col gap-2 border border-slate-800/80">
                 <div class="flex items-center justify-between text-xs">
                     <div class="flex items-center gap-2">
-                        <button id="btn-play" class="bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-md font-semibold flex items-center gap-1.5 transition">
-                            <span id="play-icon">▶ Play</span>
+                        <button id="btn-play" class="bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-cyan-600/20">
+                            <span id="play-icon">▶ Play 24H Wave</span>
                         </button>
-                        <button id="btn-allday" class="bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-md font-medium border border-gray-700 transition">
-                            All-Day Cumulative
+                        <button id="btn-allday" class="bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1 rounded-lg font-medium border border-slate-700 transition text-xs">
+                            Cumulative All-Day
                         </button>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-gray-400">Current Time Scrub:</span>
-                        <span id="display-time" class="text-base font-bold text-cyan-300 bg-gray-900 px-3 py-1 rounded border border-cyan-500/30 font-mono">12:00 PM</span>
-                        <span id="commute-tag" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30">Lunch Peak Hour</span>
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-gray-400 text-xs">Timeline Hour:</span>
+                        <span id="display-time" class="text-sm font-bold text-cyan-300 bg-slate-950 px-2.5 py-0.5 rounded-md border border-cyan-500/30 font-mono">12:00 PM</span>
+                        <span id="commute-tag" class="px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30">Lunch Footfall Peak</span>
                     </div>
                 </div>
 
-                <!-- Range Slider -->
-                <div class="flex items-center gap-3 mt-1">
-                    <span class="text-[11px] text-gray-400 font-mono">00:00</span>
-                    <input type="range" id="time-slider" min="0" max="23" value="12" step="1" class="w-full h-2 bg-gray-700 rounded-lg cursor-pointer">
-                    <span class="text-[11px] text-gray-400 font-mono">23:00</span>
+                <!-- Range Slider Bar -->
+                <div class="flex items-center gap-3 pt-0.5">
+                    <span class="text-[10px] text-gray-400 font-mono">00:00</span>
+                    <input type="range" id="time-slider" min="0" max="23" value="12" step="1" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer">
+                    <span class="text-[10px] text-gray-400 font-mono">23:00</span>
                 </div>
-                <div class="flex justify-between text-[10px] text-gray-500 px-1">
-                    <span>Night</span>
-                    <span>Morning Rush (08:00)</span>
-                    <span>Lunch Rush (12:00)</span>
-                    <span>Evening Commute (18:00)</span>
-                    <span>Night</span>
+                <div class="flex justify-between text-[9px] text-gray-500 px-1 font-mono">
+                    <span>Night (00-06)</span>
+                    <span class="text-amber-400/80">Morning Commute (08-09)</span>
+                    <span class="text-emerald-400/80">Lunch Peak (12-14)</span>
+                    <span class="text-cyan-400/80">Evening Commute (17-19)</span>
+                    <span>Late Night (22-23)</span>
                 </div>
             </div>
-
         </div>
 
-        <!-- Right Side Panel: Cannibalization Intelligence & Analytics (4 Cols) -->
-        <div class="lg:col-span-4 flex flex-col gap-4">
+        <!-- Right Side Analytics Panel (5 Columns) -->
+        <div class="lg:col-span-5 flex flex-col gap-3">
 
-            <!-- Cannibalization Simulator Box -->
-            <div class="glass-panel p-4 rounded-xl border border-gray-800 flex flex-col gap-3">
-                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                    <h2 class="text-sm font-bold text-white flex items-center gap-2">
-                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                        Store Cannibalization Simulator
-                    </h2>
-                    <span class="text-[10px] text-gray-400 font-mono">Week 3 Module</span>
+            <!-- Store Cannibalization Simulator Box -->
+            <div class="glass-card p-4 rounded-2xl border border-slate-800 flex flex-col gap-3 shadow-xl">
+                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 rounded-lg bg-red-950/80 border border-red-500/30 text-red-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-xs font-bold text-white uppercase tracking-wider">Cannibalization Simulator</h2>
+                            <p class="text-[10px] text-gray-400">Retail Expansion Viability Engine (Week 3 Module)</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-gray-300">Set Intersect</span>
                 </div>
 
-                <!-- Candidate Selector Tabs -->
+                <!-- Candidate Selector Segmented Controls -->
                 <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
-                    <button id="btn-select-b" class="py-2 px-3 rounded-lg bg-red-950/70 border-2 border-red-500 text-red-200 transition">
-                        Candidate B (Fulton)
+                    <button id="btn-select-b" class="py-2 px-3 rounded-xl bg-red-950/80 border-2 border-red-500 text-red-200 transition text-left flex items-center justify-between">
+                        <div>
+                            <span class="block text-[11px] font-bold">Candidate B (Fulton)</span>
+                            <span class="text-[9px] text-red-300 font-normal">Near-Site Expansion (400m)</span>
+                        </div>
+                        <span class="text-xs">⛔</span>
                     </button>
-                    <button id="btn-select-c" class="py-2 px-3 rounded-lg bg-gray-800/80 border border-gray-700 text-gray-400 hover:text-gray-200 transition">
-                        Candidate C (Flatiron)
+                    <button id="btn-select-c" class="py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between">
+                        <div>
+                            <span class="block text-[11px] font-bold">Candidate C (Flatiron)</span>
+                            <span class="text-[9px] text-gray-400 font-normal">Midtown Expansion (3.8km)</span>
+                        </div>
+                        <span class="text-xs">✅</span>
                     </button>
                 </div>
 
-                <!-- Active Candidate Diagnostic Details -->
-                <div id="cannibalization-card" class="bg-gray-900/90 rounded-lg p-3 border border-red-500/30 flex flex-col gap-2.5">
+                <!-- Diagnostic Cards -->
+                <div id="cannibalization-card" class="bg-slate-950/90 rounded-xl p-3.5 border border-red-500/30 flex flex-col gap-2.5">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs text-gray-400">Expansion Target:</span>
-                        <span id="target-name" class="text-xs font-bold text-white">Fulton Transit Concourse</span>
+                        <span class="text-xs text-gray-400 font-medium">Evaluated Target:</span>
+                        <span id="target-name" class="text-xs font-bold text-white">Fulton Transit Concourse (Candidate B)</span>
                     </div>
 
                     <!-- Overlap Progress Bar -->
                     <div>
                         <div class="flex justify-between text-xs mb-1">
-                            <span class="text-gray-300">Customer Overlap Rate:</span>
-                            <span id="overlap-rate" class="font-bold text-red-400">97.0%</span>
+                            <span class="text-gray-300 font-medium text-[11px]">Customer Overlap (Cannibalization):</span>
+                            <span id="overlap-rate" class="font-extrabold text-red-400 font-mono">97.0%</span>
                         </div>
-                        <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                        <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
                             <div id="overlap-bar" class="bg-red-500 h-2.5 rounded-full transition-all duration-500" style="width: 97%;"></div>
                         </div>
                     </div>
 
-                    <!-- Commuter Interception -->
+                    <!-- Commuter Interception Metrics -->
                     <div class="grid grid-cols-2 gap-2 text-xs pt-1">
-                        <div class="bg-gray-800/60 p-2 rounded border border-gray-700/60">
-                            <span class="text-gray-400 text-[10px] block">Morning Rush Intercept</span>
-                            <span id="morning-rate" class="text-red-400 font-bold text-sm">98.2%</span>
+                        <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
+                            <span class="text-gray-400 text-[10px] block">Morning Commute Intercept</span>
+                            <span id="morning-rate" class="text-red-400 font-bold text-sm font-mono">98.2%</span>
+                            <span class="text-[9px] text-gray-400 block mt-0.5">Stolen from Store A Walk</span>
                         </div>
-                        <div class="bg-gray-800/60 p-2 rounded border border-gray-700/60">
-                            <span class="text-gray-400 text-[10px] block">Net-New Customers</span>
-                            <span id="net-new-count" class="text-gray-300 font-bold text-sm">+89 devices</span>
+                        <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
+                            <span class="text-gray-400 text-[10px] block">Net-New Patrons Acquired</span>
+                            <span id="net-new-count" class="text-gray-200 font-bold text-sm font-mono">+89 devices</span>
+                            <span class="text-[9px] text-gray-400 block mt-0.5">Incremental Customers</span>
                         </div>
                     </div>
 
-                    <!-- Revenue Impact -->
-                    <div class="bg-gray-800/60 p-2 rounded border border-gray-700/60 text-xs">
-                        <span class="text-gray-400 text-[10px] block">Estimated Daily Revenue Cannibalized</span>
-                        <span id="revenue-impact" class="text-red-400 font-bold text-sm">-$3,293.00 / day</span>
-                        <span class="text-[10px] text-gray-400 block mt-0.5">Stolen from Wall St Flagship</span>
+                    <!-- Revenue Dilution Model -->
+                    <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-xs">
+                        <span class="text-gray-400 text-[10px] block">Estimated Daily Revenue Diluted / Cannibalized</span>
+                        <span id="revenue-impact" class="text-red-400 font-bold text-sm font-mono">-$3,293.00 / day</span>
+                        <span class="text-[9px] text-gray-400 block mt-0.5">Substituted from existing Store A sales</span>
                     </div>
 
-                    <!-- Recommendation Badge -->
-                    <div id="recommendation-badge" class="mt-1 p-2.5 rounded-lg bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2">
+                    <!-- Executive Rationale Recommendation -->
+                    <div id="recommendation-badge" class="p-3 rounded-xl bg-red-950/80 border border-red-500/80 text-xs text-red-300 flex items-start gap-2.5 shadow-md">
                         <span class="text-base">⛔</span>
                         <div>
-                            <strong class="block text-red-200">REJECT STORE LEASE</strong>
-                            <p class="text-[11px] leading-relaxed text-red-300 mt-0.5">
-                                Placing Store B on 5th/Fulton intercepts 98.2% of morning commuter patrons walking to Store A. It dilutes existing sales without expanding market share.
+                            <strong class="block text-red-200 text-xs font-bold uppercase tracking-wider">REJECT STORE LEASE</strong>
+                            <p class="text-[11px] leading-relaxed text-red-200/90 mt-0.5">
+                                Candidate B intercepts 98.2% of morning commuter patrons walking to Store A. It dilutes existing sales without expanding market share.
                             </p>
                         </div>
                     </div>
@@ -272,16 +316,16 @@
 
             </div>
 
-            <!-- Diurnal Traffic Curve Chart -->
-            <div class="glass-panel p-4 rounded-xl border border-gray-800 flex-1 flex flex-col gap-2">
-                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-                    <h2 class="text-sm font-bold text-white flex items-center gap-2">
+            <!-- Diurnal Traffic Comparison Chart -->
+            <div class="glass-card p-3.5 rounded-2xl border border-slate-800 flex-1 flex flex-col gap-2 shadow-xl">
+                <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
+                    <div class="flex items-center gap-1.5">
                         <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
-                        Hourly Footfall Comparison
-                    </h2>
-                    <span class="text-[10px] text-gray-400">Unique Devices/Hr</span>
+                        <h2 class="text-xs font-bold text-white uppercase tracking-wider">Hourly Footfall Curves</h2>
+                    </div>
+                    <span class="text-[10px] font-mono text-gray-400">Unique Devices/Hr</span>
                 </div>
-                <div class="relative flex-1" style="min-height: 180px;">
+                <div class="relative flex-1" style="min-height: 160px;">
                     <canvas id="hourlyChart"></canvas>
                 </div>
             </div>
@@ -291,14 +335,13 @@
     </main>
 
     <!-- Footer -->
-    <footer class="glass-panel px-6 py-2 border-t border-gray-800/80 text-[11px] text-gray-400 flex justify-between items-center">
-        <span>Infotact Solutions Project 2: <strong>GeoPulse Retail Mobility Intelligence</strong></span>
-        <span>Lead Developer: <strong>Sujal Borisa</strong> | Built with Python, Uber H3, PySpark & Leaflet</span>
+    <footer class="glass-header px-6 py-2 border-t border-slate-900 text-[11px] text-gray-400 flex justify-between items-center">
+        <span>Infotact Solutions Advanced Data Analytics | Project 2: <strong>GeoPulse Retail Mobility Intelligence</strong></span>
+        <span>Developer: <strong>Sujal Borisa</strong> | Built with Python, Uber H3 Spatial Indexing & Leaflet</span>
     </footer>
 
-    <!-- Interactive JavaScript Application Logic -->
+    <!-- Application Script -->
     <script>
-        // Global State
         let map;
         let h3LayerGroup;
         let catchmentLayerGroup;
@@ -310,16 +353,14 @@
         let playInterval = null;
         let hourlyChart = null;
 
-        // Initialize Map
         function initMap() {
-            // Center around Downtown Manhattan
             map = L.map('map', {
                 center: [40.7180, -74.0020],
                 zoom: 13,
                 zoomControl: true
             });
 
-            // Esri World Dark Gray Canvas (High-resolution, free enterprise dark basemap - No API key needed)
+            // Esri World Dark Gray Canvas (Clean, free enterprise dark-mode basemap - No API key)
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
                 attribution: '&copy; Esri &mdash; World Dark Gray Base',
                 maxZoom: 16
@@ -329,7 +370,6 @@
             catchmentLayerGroup = L.layerGroup().addTo(map);
             storeMarkerGroup = L.layerGroup().addTo(map);
 
-            // Layer Toggle Listeners
             document.getElementById('toggle-h3').addEventListener('change', (e) => {
                 if (e.target.checked) map.addLayer(h3LayerGroup);
                 else map.removeLayer(h3LayerGroup);
@@ -344,10 +384,8 @@
             });
         }
 
-        // Fetch and Render Store Points & Catchments
         async function loadStoresAndCatchments() {
             try {
-                // Catchments
                 const catchRes = await fetch('/api/catchments');
                 const catchments = await catchRes.json();
 
@@ -356,23 +394,22 @@
                         return {
                             color: feature.properties.color || '#3b82f6',
                             weight: 2,
-                            dashArray: '4, 4',
+                            dashArray: '5, 5',
                             fillColor: feature.properties.color || '#3b82f6',
-                            fillOpacity: 0.18
+                            fillOpacity: 0.16
                         };
                     },
                     onEachFeature: function(feature, layer) {
                         layer.bindPopup(`
-                            <div class="text-xs p-1">
+                            <div class="text-xs p-1 text-slate-900">
                                 <strong style="color:${feature.properties.color}">${feature.properties.name}</strong><br>
-                                <span class="text-gray-400">Catchment Buffer: ${feature.properties.radius_m}m</span><br>
-                                <span class="text-gray-400">Status: ${feature.properties.status}</span>
+                                <span>Catchment Buffer: <strong>${feature.properties.radius_m}m</strong></span><br>
+                                <span>Status: <strong>${feature.properties.status}</strong></span>
                             </div>
                         `);
                     }
                 }).addTo(catchmentLayerGroup);
 
-                // Stores
                 const storeRes = await fetch('/api/stores');
                 const stores = await storeRes.json();
 
@@ -385,15 +422,15 @@
                             color: '#ffffff',
                             weight: 2,
                             opacity: 1,
-                            fillOpacity: 0.9
+                            fillOpacity: 0.95
                         });
                     },
                     onEachFeature: function(feature, layer) {
                         layer.bindPopup(`
-                            <div class="text-xs p-1">
+                            <div class="text-xs p-1 text-slate-900">
                                 <b class="text-sm" style="color:${feature.properties.color}">${feature.properties.name}</b><br>
                                 <span>Status: <strong>${feature.properties.status}</strong></span><br>
-                                <p class="text-gray-400 mt-1">${feature.properties.description}</p>
+                                <p class="text-gray-600 mt-1">${feature.properties.description}</p>
                             </div>
                         `);
                     }
@@ -404,7 +441,6 @@
             }
         }
 
-        // Fetch and Render H3 Hexagons for specific hour or all-day
         async function loadH3Layer(hourParam) {
             try {
                 h3LayerGroup.clearLayers();
@@ -414,7 +450,7 @@
                 L.geoJSON(h3GeoJSON, {
                     style: function(feature) {
                         return {
-                            color: '#1f2937',
+                            color: '#1e293b',
                             weight: 0.5,
                             fillColor: feature.properties.fill_color,
                             fillOpacity: 0.65
@@ -422,11 +458,11 @@
                     },
                     onEachFeature: function(feature, layer) {
                         layer.bindTooltip(`
-                            <div class="text-[11px] font-mono">
+                            <div class="text-[11px] font-mono text-slate-900">
                                 <strong>H3 Hexagon: ${feature.properties.h3_index.substring(0, 8)}...</strong><br>
                                 Footfall Pings: <strong>${feature.properties.pings_count || feature.properties.total_pings}</strong><br>
                                 Unique Patrons: <strong>${feature.properties.unique_devices}</strong><br>
-                                Density Index: <strong>${(feature.properties.intensity * 100).toFixed(0)}%</strong>
+                                Density: <strong>${(feature.properties.intensity * 100).toFixed(0)}%</strong>
                             </div>
                         `, { sticky: true });
                     }
@@ -437,7 +473,6 @@
             }
         }
 
-        // Load KPIs & Cannibalization Diagnostics
         async function loadKPIsAndCannibalization() {
             try {
                 const kpiRes = await fetch('/api/kpis');
@@ -459,7 +494,6 @@
             }
         }
 
-        // Render Cannibalization Diagnostic Card
         function renderCannibalizationCard(storeId) {
             if (!cannibalizationData || !cannibalizationData.candidate_evaluations) return;
             const evalData = cannibalizationData.candidate_evaluations[storeId];
@@ -472,59 +506,58 @@
             const badge = document.getElementById('recommendation-badge');
 
             if (isStoreB) {
-                btnB.className = "py-2 px-3 rounded-lg bg-red-950/70 border-2 border-red-500 text-red-200 transition";
-                btnC.className = "py-2 px-3 rounded-lg bg-gray-800/80 border border-gray-700 text-gray-400 hover:text-gray-200 transition";
-                card.className = "bg-gray-900/90 rounded-lg p-3 border border-red-500/30 flex flex-col gap-2.5";
+                btnB.className = "py-2 px-3 rounded-xl bg-red-950/80 border-2 border-red-500 text-red-200 transition text-left flex items-center justify-between shadow-lg shadow-red-950/50";
+                btnC.className = "py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between";
+                card.className = "bg-slate-950/90 rounded-xl p-3.5 border border-red-500/40 flex flex-col gap-2.5";
                 
-                document.getElementById('target-name').innerText = "Fulton Transit Concourse";
+                document.getElementById('target-name').innerText = "Fulton Transit Concourse (Candidate B)";
                 document.getElementById('overlap-rate').innerText = `${evalData.cannibalization_rate_overall_pct}%`;
-                document.getElementById('overlap-rate').className = "font-bold text-red-400";
+                document.getElementById('overlap-rate').className = "font-extrabold text-red-400 font-mono";
                 document.getElementById('overlap-bar').className = "bg-red-500 h-2.5 rounded-full transition-all duration-500";
                 document.getElementById('overlap-bar').style.width = `${evalData.cannibalization_rate_overall_pct}%`;
 
                 document.getElementById('morning-rate').innerText = `${evalData.cannibalization_rate_morning_commute_pct}%`;
-                document.getElementById('morning-rate').className = "text-red-400 font-bold text-sm";
+                document.getElementById('morning-rate').className = "text-red-400 font-bold text-sm font-mono";
                 document.getElementById('net-new-count').innerText = `+${evalData.net_new_customers_count} devices`;
                 document.getElementById('revenue-impact').innerText = `-$${evalData.estimated_daily_revenue_cannibalized_usd.toLocaleString()} / day`;
-                document.getElementById('revenue-impact').className = "text-red-400 font-bold text-sm";
+                document.getElementById('revenue-impact').className = "text-red-400 font-bold text-sm font-mono";
 
-                badge.className = "mt-1 p-2.5 rounded-lg bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2";
+                badge.className = "p-3 rounded-xl bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2.5 shadow-md";
                 badge.innerHTML = `
                     <span class="text-base">⛔</span>
                     <div>
-                        <strong class="block text-red-200">REJECT STORE LEASE</strong>
-                        <p class="text-[11px] leading-relaxed text-red-300 mt-0.5">${evalData.executive_rationale}</p>
+                        <strong class="block text-red-200 text-xs font-bold uppercase tracking-wider">REJECT STORE LEASE</strong>
+                        <p class="text-[11px] leading-relaxed text-red-200/90 mt-0.5">${evalData.executive_rationale}</p>
                     </div>
                 `;
             } else {
-                btnC.className = "py-2 px-3 rounded-lg bg-blue-950/70 border-2 border-blue-500 text-blue-200 transition";
-                btnB.className = "py-2 px-3 rounded-lg bg-gray-800/80 border border-gray-700 text-gray-400 hover:text-gray-200 transition";
-                card.className = "bg-gray-900/90 rounded-lg p-3 border border-blue-500/30 flex flex-col gap-2.5";
+                btnC.className = "py-2 px-3 rounded-xl bg-blue-950/80 border-2 border-blue-500 text-blue-200 transition text-left flex items-center justify-between shadow-lg shadow-blue-950/50";
+                btnB.className = "py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between";
+                card.className = "bg-slate-950/90 rounded-xl p-3.5 border border-blue-500/40 flex flex-col gap-2.5";
 
-                document.getElementById('target-name').innerText = "Flatiron / Madison Square";
+                document.getElementById('target-name').innerText = "Flatiron / Madison Square (Candidate C)";
                 document.getElementById('overlap-rate').innerText = `${evalData.cannibalization_rate_overall_pct}%`;
-                document.getElementById('overlap-rate').className = "font-bold text-emerald-400";
+                document.getElementById('overlap-rate').className = "font-extrabold text-emerald-400 font-mono";
                 document.getElementById('overlap-bar').className = "bg-emerald-500 h-2.5 rounded-full transition-all duration-500";
                 document.getElementById('overlap-bar').style.width = `${evalData.cannibalization_rate_overall_pct}%`;
 
                 document.getElementById('morning-rate').innerText = "0.0% (Clean)";
-                document.getElementById('morning-rate').className = "text-emerald-400 font-bold text-sm";
+                document.getElementById('morning-rate').className = "text-emerald-400 font-bold text-sm font-mono";
                 document.getElementById('net-new-count').innerText = `+${evalData.net_new_customers_count.toLocaleString()} devices`;
                 document.getElementById('revenue-impact').innerText = `+$4,200.00 / day (Incremental)`;
-                document.getElementById('revenue-impact').className = "text-emerald-400 font-bold text-sm";
+                document.getElementById('revenue-impact').className = "text-emerald-400 font-bold text-sm font-mono";
 
-                badge.className = "mt-1 p-2.5 rounded-lg bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-300 flex items-start gap-2";
+                badge.className = "p-3 rounded-xl bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-300 flex items-start gap-2.5 shadow-md";
                 badge.innerHTML = `
                     <span class="text-base">✅</span>
                     <div>
-                        <strong class="block text-emerald-200">APPROVED EXPANSION</strong>
-                        <p class="text-[11px] leading-relaxed text-emerald-300 mt-0.5">${evalData.executive_rationale}</p>
+                        <strong class="block text-emerald-200 text-xs font-bold uppercase tracking-wider">APPROVED EXPANSION</strong>
+                        <p class="text-[11px] leading-relaxed text-emerald-200/90 mt-0.5">${evalData.executive_rationale}</p>
                     </div>
                 `;
             }
         }
 
-        // Chart.js Hourly Trend Multi-Line Chart
         async function loadHourlyTrendChart() {
             try {
                 const res = await fetch('/api/hourly_footfall');
@@ -545,29 +578,29 @@
                                 label: 'Store A (Wall St Flagship)',
                                 data: storeA_data,
                                 borderColor: '#10b981',
-                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                backgroundColor: 'rgba(16, 185, 129, 0.08)',
                                 tension: 0.35,
-                                borderWidth: 2.5,
-                                pointRadius: 2
+                                borderWidth: 2.2,
+                                pointRadius: 1.5
                             },
                             {
                                 label: 'Candidate B (Fulton - Cannibal)',
                                 data: storeB_data,
                                 borderColor: '#ef4444',
-                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                backgroundColor: 'rgba(239, 68, 68, 0.08)',
                                 borderDash: [4, 4],
                                 tension: 0.35,
-                                borderWidth: 2,
-                                pointRadius: 2
+                                borderWidth: 1.8,
+                                pointRadius: 1.5
                             },
                             {
                                 label: 'Candidate C (Flatiron - Clean)',
                                 data: storeC_data,
                                 borderColor: '#3b82f6',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.08)',
                                 tension: 0.35,
-                                borderWidth: 2,
-                                pointRadius: 2
+                                borderWidth: 1.8,
+                                pointRadius: 1.5
                             }
                         ]
                     },
@@ -577,17 +610,17 @@
                         interaction: { mode: 'index', intersect: false },
                         plugins: {
                             legend: {
-                                labels: { color: '#9ca3af', font: { size: 10 } }
+                                labels: { color: '#94a3b8', font: { size: 9 }, boxWidth: 12 }
                             }
                         },
                         scales: {
                             x: {
-                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                                ticks: { color: '#6b7280', font: { size: 9 }, maxTicksLimit: 8 }
+                                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                                ticks: { color: '#64748b', font: { size: 9 }, maxTicksLimit: 8 }
                             },
                             y: {
-                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                                ticks: { color: '#6b7280', font: { size: 9 } }
+                                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                                ticks: { color: '#64748b', font: { size: 9 } }
                             }
                         }
                     }
@@ -598,67 +631,60 @@
             }
         }
 
-        // Timeline Slider Interaction
         function updateTimelineHour(hour) {
             currentHour = parseInt(hour);
             document.getElementById('time-slider').value = currentHour;
             
-            // Format time display
             const ampm = currentHour >= 12 ? 'PM' : 'AM';
             const displayHour = currentHour % 12 === 0 ? 12 : currentHour % 12;
             document.getElementById('display-time').innerText = `${displayHour}:00 ${ampm}`;
 
-            // Update commute tag
             const tag = document.getElementById('commute-tag');
             if (currentHour >= 7 && currentHour <= 9) {
-                tag.innerText = "Morning Commute Rush (Wall St Flow)";
-                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-950 text-amber-400 border border-amber-500/30";
+                tag.innerText = "Morning Commute Rush (Wall St Influx)";
+                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-amber-950 text-amber-300 border border-amber-500/40";
             } else if (currentHour >= 11 && currentHour <= 14) {
                 tag.innerText = "Lunch Footfall Peak";
-                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30";
+                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40";
             } else if (currentHour >= 17 && currentHour <= 19) {
                 tag.innerText = "Evening Commuter Flow";
-                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-950 text-cyan-400 border border-cyan-500/30";
+                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-cyan-950 text-cyan-300 border border-cyan-500/40";
             } else {
                 tag.innerText = "Normal / Off-Peak Hours";
-                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-gray-800 text-gray-400 border border-gray-700";
+                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-slate-800 text-slate-400 border border-slate-700";
             }
 
-            // Reload H3 layer for this hour
             loadH3Layer(currentHour);
         }
 
-        // Play/Pause Diurnal Simulation
         function togglePlay() {
             isPlaying = !isPlaying;
             const btn = document.getElementById('btn-play');
             const icon = document.getElementById('play-icon');
 
             if (isPlaying) {
-                icon.innerText = "⏸ Pause";
-                btn.className = "bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-md font-semibold flex items-center gap-1.5 transition";
+                icon.innerText = "⏸ Pause Wave";
+                btn.className = "bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-amber-600/20";
                 playInterval = setInterval(() => {
                     let nextHour = (currentHour + 1) % 24;
                     updateTimelineHour(nextHour);
-                }, 1200); // 1.2s per hour
+                }, 1200);
             } else {
-                icon.innerText = "▶ Play";
-                btn.className = "bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-md font-semibold flex items-center gap-1.5 transition";
+                icon.innerText = "▶ Play 24H Wave";
+                btn.className = "bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-cyan-600/20";
                 clearInterval(playInterval);
             }
         }
 
-        // Initialize Everything on Load
         document.addEventListener('DOMContentLoaded', () => {
             initMap();
             loadStoresAndCatchments();
             loadKPIsAndCannibalization();
-            loadH3Layer(12); // Initial load at 12:00 PM
+            loadH3Layer(12);
             loadHourlyTrendChart();
 
-            // Event Listeners
             document.getElementById('time-slider').addEventListener('input', (e) => {
-                if (isPlaying) togglePlay(); // Pause if user manually scrubs
+                if (isPlaying) togglePlay();
                 updateTimelineHour(e.target.value);
             });
 
@@ -668,7 +694,7 @@
                 if (isPlaying) togglePlay();
                 document.getElementById('display-time').innerText = "ALL-DAY (24H)";
                 document.getElementById('commute-tag').innerText = "Cumulative Citywide Footfall";
-                document.getElementById('commute-tag').className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30";
+                document.getElementById('commute-tag').className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30";
                 loadH3Layer('allday');
             });
 
