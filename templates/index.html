@@ -354,7 +354,30 @@
                         </div>
                     </div>
 
-                    <!-- Interception & Net-New Metrics -->
+                    <!-- Dynamic Live Hourly Telemetry Box (Updates dynamically with 24H Slider!) -->
+                    <div class="bg-gradient-to-r from-slate-900 via-slate-900/90 to-cyan-950/40 p-2.5 rounded-xl border border-cyan-500/40 shadow-inner flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+                                Live Hourly Telemetry: <strong id="live-telemetry-hour" class="text-white font-mono">12:00 PM</strong>
+                            </span>
+                            <span id="live-wave-status" class="text-[9px] font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-700/60 font-mono">LUNCH PEAK</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs pt-0.5">
+                            <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/90">
+                                <span class="text-gray-400 text-[9px] block">Active Footfall (This Hour)</span>
+                                <span id="live-hourly-patrons" class="text-cyan-400 font-black text-sm font-mono tracking-tight">7,240 patrons/hr</span>
+                                <span id="live-hourly-delta" class="text-[8px] text-gray-400 block mt-0.5">Flagship: 7,320/hr</span>
+                            </div>
+                            <div class="bg-slate-950/80 p-2 rounded-lg border border-slate-800/90">
+                                <span class="text-gray-400 text-[9px] block">Hourly Commute Intensity</span>
+                                <span id="live-hourly-intensity" class="text-emerald-400 font-black text-sm font-mono tracking-tight">88.5% Capacity</span>
+                                <span id="live-hourly-trend" class="text-[8px] text-emerald-400/90 block mt-0.5">▲ High Influx</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 24H Summary Baseline Metrics -->
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800">
                             <span class="text-gray-400 text-[9px] block">Morning Rush Intercept</span>
@@ -422,6 +445,7 @@
         let storeMarkerGroup;
         let hourlyFootfallData = [];
         let cannibalizationData = {};
+        let currentCandidateId = 'STORE_02';
         let currentHour = 12;
         let isPlaying = false;
         let playInterval = null;
@@ -654,12 +678,86 @@
                 badgeDesc.className = "text-[10px] leading-tight text-emerald-200/90 mt-0.5";
                 badgeDesc.innerText = evalData.rationale;
             }
+
+            currentCandidateId = candidateId;
+            updateLiveHourlyTelemetry();
+        }
+
+        function updateLiveHourlyTelemetry() {
+            const h = currentHour;
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const displayH = h % 12 === 0 ? 12 : h % 12;
+            const timeLabel = `${displayH}:00 ${ampm}`;
+
+            const hourLabelEl = document.getElementById('live-telemetry-hour');
+            if (hourLabelEl) hourLabelEl.innerText = timeLabel;
+
+            if (!hourlyFootfallData || hourlyFootfallData.length <= h) return;
+            const hourRow = hourlyFootfallData[h];
+            if (!hourRow) return;
+
+            const flagshipVisitors = hourRow['STORE_01_unique_visitors'] || 0;
+            const candidateKey = currentCandidateId + '_unique_visitors';
+            const candidateVisitors = hourRow[candidateKey] || 0;
+
+            const patronsEl = document.getElementById('live-hourly-patrons');
+            const deltaEl = document.getElementById('live-hourly-delta');
+            const intensityEl = document.getElementById('live-hourly-intensity');
+            const statusEl = document.getElementById('live-wave-status');
+            const trendEl = document.getElementById('live-hourly-trend');
+
+            if (patronsEl) patronsEl.innerText = `${candidateVisitors.toLocaleString()} patrons/hr`;
+            if (deltaEl) deltaEl.innerText = `Flagship: ${flagshipVisitors.toLocaleString()} patrons/hr`;
+
+            const peakMax = 8500;
+            const ratioPct = Math.min(100, Math.round((candidateVisitors / peakMax) * 100));
+
+            if (intensityEl) intensityEl.innerText = `${ratioPct}% Capacity Wave`;
+
+            if (h >= 7 && h <= 9) {
+                if (statusEl) {
+                    statusEl.innerText = "MORNING RUSH";
+                    statusEl.className = "text-[9px] font-bold px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700/60 font-mono shadow-sm";
+                }
+                if (trendEl) {
+                    trendEl.innerText = "▲ Heavy Influx (Morning Commuters)";
+                    trendEl.className = "text-[8px] text-amber-400 font-bold block mt-0.5";
+                }
+            } else if (h >= 11 && h <= 14) {
+                if (statusEl) {
+                    statusEl.innerText = "LUNCH PEAK";
+                    statusEl.className = "text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700/60 font-mono shadow-sm";
+                }
+                if (trendEl) {
+                    trendEl.innerText = "▲ Retail & Dining Footfall Influx";
+                    trendEl.className = "text-[8px] text-emerald-400 font-bold block mt-0.5";
+                }
+            } else if (h >= 17 && h <= 19) {
+                if (statusEl) {
+                    statusEl.innerText = "EVENING COMMUTE";
+                    statusEl.className = "text-[9px] font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-700/60 font-mono shadow-sm";
+                }
+                if (trendEl) {
+                    trendEl.innerText = "▼ Transit Departure Wave";
+                    trendEl.className = "text-[8px] text-cyan-400 font-bold block mt-0.5";
+                }
+            } else {
+                if (statusEl) {
+                    statusEl.innerText = "OFF-PEAK";
+                    statusEl.className = "text-[9px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-mono";
+                }
+                if (trendEl) {
+                    trendEl.innerText = "— Low Baseline Activity";
+                    trendEl.className = "text-[8px] text-slate-400 font-medium block mt-0.5";
+                }
+            }
         }
 
         async function loadHourlyTrendChart() {
             try {
                 const res = await fetch('/api/hourly_footfall');
                 hourlyFootfallData = await res.json();
+                updateLiveHourlyTelemetry();
 
                 const labels = hourlyFootfallData.map(d => d.time_label);
                 const s01 = hourlyFootfallData.map(d => d.STORE_01_unique_visitors);
@@ -784,6 +882,37 @@
                 ]);
                 hourlyChart.update('none');
             }
+
+            // Dynamically update right-hand candidate simulator telemetry
+            updateLiveHourlyTelemetry();
+        }
+
+        function showAllDayTelemetry() {
+            const hourLabelEl = document.getElementById('live-telemetry-hour');
+            if (hourLabelEl) hourLabelEl.innerText = "24-Hour Total";
+            
+            if (!hourlyFootfallData || hourlyFootfallData.length === 0) return;
+            const candidateKey = currentCandidateId + '_unique_visitors';
+            const totalCandidate = hourlyFootfallData.reduce((acc, r) => acc + (r[candidateKey] || 0), 0);
+            const totalFlagship = hourlyFootfallData.reduce((acc, r) => acc + (r['STORE_01_unique_visitors'] || 0), 0);
+
+            const patronsEl = document.getElementById('live-hourly-patrons');
+            const deltaEl = document.getElementById('live-hourly-delta');
+            const intensityEl = document.getElementById('live-hourly-intensity');
+            const statusEl = document.getElementById('live-wave-status');
+            const trendEl = document.getElementById('live-hourly-trend');
+
+            if (patronsEl) patronsEl.innerText = `${totalCandidate.toLocaleString()} total/day`;
+            if (deltaEl) deltaEl.innerText = `Flagship: ${totalFlagship.toLocaleString()} total/day`;
+            if (intensityEl) intensityEl.innerText = `100% Day Cycle`;
+            if (statusEl) {
+                statusEl.innerText = "ALL-DAY TOTAL";
+                statusEl.className = "text-[9px] font-bold px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-700/60 font-mono shadow-sm";
+            }
+            if (trendEl) {
+                trendEl.innerText = "★ Cumulative 24H Volume";
+                trendEl.className = "text-[8px] text-indigo-400 font-bold block mt-0.5";
+            }
         }
 
         function togglePlay() {
@@ -825,6 +954,7 @@
                 document.getElementById('commute-tag').innerText = "Cumulative Citywide Footfall";
                 document.getElementById('commute-tag').className = "px-2.5 py-0.5 rounded text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30";
                 loadH3Layer('allday');
+                showAllDayTelemetry();
             });
         });
     </script>
