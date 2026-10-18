@@ -19,9 +19,9 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbase: '#070b14',
-                        carddark: '#0f172a',
-                        cardborder: '#1e293b',
+                        darkbase: '#060911',
+                        carddark: '#0d1322',
+                        cardborder: '#1a2235',
                         cyanpulse: '#06b6d4',
                         emeraldsafe: '#10b981',
                         crimsondanger: '#ef4444',
@@ -32,32 +32,34 @@
         }
     </script>
     <style>
-        body {
-            background-color: #070b14;
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Strict Single Viewport - No Body Scroll */
+            background-color: #060911;
             color: #f1f5f9;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .glass-header {
-            background: rgba(15, 23, 42, 0.90);
+            background: rgba(13, 19, 34, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-card {
-            background: rgba(15, 23, 42, 0.80);
+            background: rgba(13, 19, 34, 0.82);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-floating {
-            background: rgba(7, 11, 20, 0.90);
+            background: rgba(6, 9, 17, 0.92);
             backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
         }
         #map {
             width: 100%;
-            height: calc(100vh - 195px);
-            min-height: 590px;
-            border-radius: 14px;
+            height: 100%;
+            border-radius: 12px;
         }
         .pulse-live {
             display: inline-block;
@@ -65,7 +67,7 @@
             height: 8px;
             border-radius: 50%;
             background-color: #10b981;
-            box-shadow: 0 0 10px #10b981;
+            box-shadow: 0 0 8px #10b981;
             animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         @keyframes pulse-ring {
@@ -73,269 +75,264 @@
             50% { opacity: 0.4; transform: scale(1.2); }
         }
         input[type=range] { accent-color: #06b6d4; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #070b14; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #060911; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
+<body class="h-screen w-screen flex flex-col antialiased">
 
-    <!-- Top Navigation Header -->
-    <header class="glass-header px-6 py-2.5 sticky top-0 z-50 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Top Navigation Header (Height: 46px) -->
+    <header class="glass-header px-5 py-2 h-[46px] flex items-center justify-between shrink-0 z-50">
+        <div class="flex items-center gap-2.5">
+            <div class="h-7 w-7 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-500/20">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
             </div>
-            <div>
-                <div class="flex items-center gap-2">
-                    <h1 class="text-base font-bold text-white tracking-wide">Geo<span class="text-cyan-400">Pulse</span></h1>
-                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-800/60">Uber H3 Res-9 Grid</span>
-                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">500k+ Parquet Lakehouse</span>
-                    <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60">8 Strategic Nodes</span>
-                </div>
-                <p class="text-[11px] text-gray-400">Enterprise Retail Mobility & Multi-Store Cannibalization Intelligence (UrbanBean Coffee Chain)</p>
+            <div class="flex items-center gap-2">
+                <h1 class="text-sm font-bold text-white tracking-wide">Geo<span class="text-cyan-400">Pulse</span></h1>
+                <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/80">Uber H3 Res-9</span>
+                <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800/80">537k+ Parquet Lakehouse</span>
+                <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800/80">8 Retail Nodes</span>
             </div>
         </div>
 
         <!-- Telemetry Badges -->
-        <div class="flex items-center gap-2.5 text-xs">
-            <div class="flex items-center gap-2 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg">
+        <div class="flex items-center gap-2 text-xs">
+            <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-md text-[11px]">
                 <span class="pulse-live"></span>
-                <span class="text-gray-300 text-[11px]">Lakehouse: <strong class="text-emerald-400">LIVE (537k Pings)</strong></span>
+                <span class="text-gray-300">Lakehouse: <strong class="text-emerald-400">537k Pings</strong></span>
             </div>
-            <div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] text-gray-300">
-                Network: <strong class="text-cyan-400 font-mono">8 Stores / 500m Buffers</strong>
+            <div class="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-md text-[11px] text-gray-300">
+                Catchments: <strong class="text-cyan-400 font-mono">500m Buffers</strong>
             </div>
-            <div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] text-gray-300">
+            <div class="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-md text-[11px] text-gray-300">
                 Corridor: <strong class="text-gray-200">Manhattan Island</strong>
             </div>
         </div>
     </header>
 
-    <!-- Executive KPI Summary Strip (Massive Scale) -->
-    <section class="grid grid-cols-2 md:grid-cols-5 gap-3 px-6 py-2.5 bg-slate-950/40 border-b border-slate-900">
-        <div class="glass-card p-2.5 rounded-xl border-l-4 border-cyan-500 flex flex-col justify-between">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Massive GPS Mobility Records</span>
-            <div class="text-lg font-extrabold text-white font-mono mt-0.5" id="kpi-pings">537,781</div>
-            <span class="text-[10px] text-cyan-400 font-medium">Vectorized Lakehouse Parquet</span>
+    <!-- Executive KPI Strip (Height: 52px - Always Anchored & Visible) -->
+    <section class="grid grid-cols-5 gap-2.5 px-5 py-1.5 bg-slate-950/70 border-b border-slate-900 h-[52px] shrink-0">
+        <div class="glass-card px-3 py-1 rounded-lg border-l-2 border-cyan-500 flex items-center justify-between">
+            <div>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-gray-400 block">Total GPS Records</span>
+                <div class="text-sm font-extrabold text-white font-mono" id="kpi-pings">537,781</div>
+            </div>
+            <span class="text-[9px] text-cyan-400/90 font-medium">Parquet Snappy</span>
         </div>
-        <div class="glass-card p-2.5 rounded-xl border-l-4 border-indigo-500 flex flex-col justify-between">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tracked Mobile Devices</span>
-            <div class="text-lg font-extrabold text-indigo-300 font-mono mt-0.5" id="kpi-devices">25,000</div>
-            <span class="text-[10px] text-gray-400 font-medium">Anonymized Unique Patrons</span>
+        <div class="glass-card px-3 py-1 rounded-lg border-l-2 border-indigo-500 flex items-center justify-between">
+            <div>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-gray-400 block">Tracked Devices</span>
+                <div class="text-sm font-extrabold text-indigo-300 font-mono" id="kpi-devices">25,000</div>
+            </div>
+            <span class="text-[9px] text-gray-400 font-medium">Unique IDs</span>
         </div>
-        <div class="glass-card p-2.5 rounded-xl border-l-4 border-emerald-500 flex flex-col justify-between">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Commercial Store Network</span>
-            <div class="text-lg font-extrabold text-emerald-400 font-mono mt-0.5">8 Commercial Hubs</div>
-            <span class="text-[10px] text-gray-400 font-medium">4 Flagships + 4 Candidates</span>
+        <div class="glass-card px-3 py-1 rounded-lg border-l-2 border-emerald-500 flex items-center justify-between">
+            <div>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-gray-400 block">Retail Stores</span>
+                <div class="text-sm font-extrabold text-emerald-400 font-mono">8 Strategic Hubs</div>
+            </div>
+            <span class="text-[9px] text-gray-400 font-medium">4 Flagships + 4 Candidates</span>
         </div>
-        <div class="glass-card p-2.5 rounded-xl border-l-4 border-red-500 flex flex-col justify-between">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-red-400">Candidate B (Fulton) Overlap</span>
-            <div class="text-lg font-extrabold text-red-400 font-mono mt-0.5" id="kpi-cannibal-b">97.0% Overlap</div>
-            <span class="text-[10px] text-red-300 font-bold">⛔ REJECT (98.2% Morning Stolen)</span>
+        <div class="glass-card px-3 py-1 rounded-lg border-l-2 border-red-500 flex items-center justify-between">
+            <div>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-red-400 block">Fulton Intercept</span>
+                <div class="text-sm font-extrabold text-red-400 font-mono" id="kpi-cannibal-b">99.8% Overlap</div>
+            </div>
+            <span class="text-[9px] text-red-300 font-bold">⛔ REJECT LEASE</span>
         </div>
-        <div class="glass-card p-2.5 rounded-xl border-l-4 border-blue-500 flex flex-col justify-between">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-400">Candidate C (Flatiron) Net-New</span>
-            <div class="text-lg font-extrabold text-blue-400 font-mono mt-0.5" id="kpi-cannibal-c">+4,750 Net-New</div>
-            <span class="text-[10px] text-emerald-400 font-bold">✅ APPROVED (4.8% Overlap)</span>
+        <div class="glass-card px-3 py-1 rounded-lg border-l-2 border-blue-500 flex items-center justify-between">
+            <div>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-blue-400 block">Flatiron Expansion</span>
+                <div class="text-sm font-extrabold text-blue-400 font-mono" id="kpi-cannibal-c">+4,970 Net-New</div>
+            </div>
+            <span class="text-[9px] text-emerald-400 font-bold">✅ APPROVED (Clean)</span>
         </div>
     </section>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <!-- Main Workspace (Fills Remaining Screen Height Perfectly) -->
+    <main class="flex-1 min-h-0 px-5 py-2.5 grid grid-cols-12 gap-3 overflow-hidden">
 
-        <!-- Center & Map Display (7 Columns) -->
-        <div class="lg:col-span-7 flex flex-col gap-2 relative">
-            <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex-1 flex flex-col">
+        <!-- Left Column: Map + Embedded Timeline Player (7 Columns) -->
+        <div class="col-span-7 flex flex-col gap-2 h-full min-h-0">
+            <!-- Map Container -->
+            <div class="relative flex-1 min-h-0 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl">
                 <div id="map"></div>
 
                 <!-- Floating Top-Right Layer Selector -->
-                <div class="absolute top-3 right-3 z-[1000] glass-floating p-2.5 rounded-xl shadow-xl flex flex-col gap-1.5 text-xs">
-                    <span class="font-bold text-gray-300 text-[11px] border-b border-gray-700/80 pb-1 flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
-                        Map Controls
+                <div class="absolute top-2.5 right-2.5 z-[1000] glass-floating p-2 rounded-lg shadow-xl flex flex-col gap-1 text-[11px]">
+                    <span class="font-bold text-gray-300 text-[10px] border-b border-gray-700/80 pb-0.5 flex items-center gap-1">
+                        <svg class="w-3 h-3 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
+                        Layers
                     </span>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                    <label class="flex items-center gap-1.5 cursor-pointer text-gray-300 hover:text-white">
                         <input type="checkbox" id="toggle-h3" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
-                        <span>Uber H3 Heat Grid (Res-9)</span>
+                        <span>Uber H3 Heatmap</span>
                     </label>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                    <label class="flex items-center gap-1.5 cursor-pointer text-gray-300 hover:text-white">
                         <input type="checkbox" id="toggle-catchments" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
-                        <span>All 8 Catchment Buffers (500m)</span>
+                        <span>8 Catchments (500m)</span>
                     </label>
-                    <label class="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white text-[11px]">
+                    <label class="flex items-center gap-1.5 cursor-pointer text-gray-300 hover:text-white">
                         <input type="checkbox" id="toggle-stores" checked class="rounded bg-gray-800 border-gray-700 text-cyan-500">
-                        <span>Store Pinpoints (8 Sites)</span>
+                        <span>Store Pinpoints</span>
                     </label>
                 </div>
 
                 <!-- Floating Bottom-Left Density Legend -->
-                <div class="absolute bottom-3 left-3 z-[1000] glass-floating px-3 py-2 rounded-xl text-[10px] flex flex-col gap-1 shadow-lg">
-                    <span class="text-gray-300 font-semibold">Citywide Footfall Density</span>
-                    <div class="flex items-center gap-1">
-                        <span class="w-4 h-2.5 rounded-sm" style="background:#312e81"></span>
-                        <span class="w-4 h-2.5 rounded-sm" style="background:#06b6d4"></span>
-                        <span class="w-4 h-2.5 rounded-sm" style="background:#10b981"></span>
-                        <span class="w-4 h-2.5 rounded-sm" style="background:#f59e0b"></span>
-                        <span class="w-4 h-2.5 rounded-sm" style="background:#ef4444"></span>
+                <div class="absolute bottom-2.5 left-2.5 z-[1000] glass-floating px-2.5 py-1.5 rounded-lg text-[9px] flex flex-col gap-0.5 shadow-lg">
+                    <span class="text-gray-300 font-semibold">Footfall Heat Density</span>
+                    <div class="flex items-center gap-0.5">
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#1e3a8a"></span>
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#0284c7"></span>
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#06b6d4"></span>
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#10b981"></span>
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#f59e0b"></span>
+                        <span class="w-3.5 h-2 rounded-sm" style="background:#ef4444"></span>
                     </div>
-                    <div class="flex justify-between text-gray-400 text-[9px]">
-                        <span>Moderate</span>
-                        <span>Dense Hotspot</span>
+                    <div class="flex justify-between text-gray-400">
+                        <span>Baseline</span>
+                        <span>Hotspot</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 24-Hour Timeline Scrub Controller -->
-            <div class="glass-card px-4 py-3 rounded-2xl flex flex-col gap-2 border border-slate-800/80">
+            <!-- Compact 24-Hour Timeline Controller (Height: ~60px) -->
+            <div class="glass-card px-3.5 py-2 rounded-xl flex flex-col gap-1 border border-slate-800 shrink-0">
                 <div class="flex items-center justify-between text-xs">
                     <div class="flex items-center gap-2">
-                        <button id="btn-play" class="bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-cyan-600/20">
+                        <button id="btn-play" class="bg-cyan-600 hover:bg-cyan-500 text-white px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1 text-[11px] shadow transition">
                             <span id="play-icon">▶ Play 24H Wave</span>
                         </button>
-                        <button id="btn-allday" class="bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1 rounded-lg font-medium border border-slate-700 transition text-xs">
+                        <button id="btn-allday" class="bg-slate-800 hover:bg-slate-700 text-gray-300 px-2.5 py-0.5 rounded-md font-medium border border-slate-700 text-[11px] transition">
                             Cumulative All-Day
                         </button>
                     </div>
-                    <div class="flex items-center gap-2.5">
-                        <span class="text-gray-400 text-xs">Timeline Hour:</span>
-                        <span id="display-time" class="text-sm font-bold text-cyan-300 bg-slate-950 px-2.5 py-0.5 rounded-md border border-cyan-500/30 font-mono">12:00 PM</span>
-                        <span id="commute-tag" class="px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30">Lunch Footfall Peak</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-400 text-[11px]">Timeline:</span>
+                        <span id="display-time" class="text-xs font-bold text-cyan-300 bg-slate-950 px-2 py-0.5 rounded border border-cyan-500/30 font-mono">12:00 PM</span>
+                        <span id="commute-tag" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-500/30">Lunch Footfall Peak</span>
                     </div>
                 </div>
 
                 <!-- Range Slider Bar -->
-                <div class="flex items-center gap-3 pt-0.5">
-                    <span class="text-[10px] text-gray-400 font-mono">00:00</span>
+                <div class="flex items-center gap-2 pt-0.5">
+                    <span class="text-[9px] text-gray-400 font-mono">00:00</span>
                     <input type="range" id="time-slider" min="0" max="23" value="12" step="1" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer">
-                    <span class="text-[10px] text-gray-400 font-mono">23:00</span>
+                    <span class="text-[9px] text-gray-400 font-mono">23:00</span>
                 </div>
-                <div class="flex justify-between text-[9px] text-gray-500 px-1 font-mono">
-                    <span>Night (00-06)</span>
-                    <span class="text-amber-400/80">Morning Commute (08-09)</span>
-                    <span class="text-emerald-400/80">Lunch Peak (12-14)</span>
-                    <span class="text-cyan-400/80">Evening Commute (17-19)</span>
-                    <span>Late Night (22-23)</span>
+                <div class="flex justify-between text-[8px] text-gray-500 px-1 font-mono">
+                    <span>Night</span>
+                    <span class="text-amber-400/80">Morning Rush (08:00)</span>
+                    <span class="text-emerald-400/80">Lunch Peak (12:00)</span>
+                    <span class="text-cyan-400/80">Evening Commute (18:00)</span>
+                    <span>Night</span>
                 </div>
             </div>
         </div>
 
-        <!-- Right Side Analytics Panel (5 Columns) -->
-        <div class="lg:col-span-5 flex flex-col gap-3">
+        <!-- Right Column: Cannibalization Intelligence & Traffic Chart (5 Columns) -->
+        <div class="col-span-5 flex flex-col gap-2.5 h-full min-h-0 overflow-hidden">
 
-            <!-- Cannibalization Simulator Box with 4 Expansion Candidates -->
-            <div class="glass-card p-4 rounded-2xl border border-slate-800 flex flex-col gap-3 shadow-xl">
-                <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="p-1.5 rounded-lg bg-red-950/80 border border-red-500/30 text-red-400">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            <!-- Store Cannibalization Simulator Box -->
+            <div class="glass-card p-3 rounded-xl border border-slate-800 flex flex-col gap-2 shadow-xl shrink-0">
+                <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
+                    <div class="flex items-center gap-1.5">
+                        <div class="p-1 rounded-md bg-red-950/80 border border-red-500/30 text-red-400">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                         </div>
-                        <div>
-                            <h2 class="text-xs font-bold text-white uppercase tracking-wider">Multi-Candidate Cannibalization Simulator</h2>
-                            <p class="text-[10px] text-gray-400">Select any candidate to simulate expansion viability</p>
-                        </div>
+                        <h2 class="text-xs font-bold text-white uppercase tracking-wider">Multi-Candidate Simulator</h2>
                     </div>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">8x8 Matrix</span>
+                    <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300">8x8 Matrix</span>
                 </div>
 
                 <!-- 4 Candidate Tabs -->
-                <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
-                    <button onclick="selectCandidate('STORE_02')" id="btn-cand-STORE_02" class="p-2 rounded-xl bg-red-950/80 border-2 border-red-500 text-red-200 transition text-left flex items-center justify-between shadow-md">
-                        <div>
-                            <span class="block text-[11px] font-bold">Fulton Hub</span>
-                            <span class="text-[9px] text-red-300 font-normal">Near Wall St (420m)</span>
-                        </div>
-                        <span class="text-xs">⛔</span>
+                <div class="grid grid-cols-4 gap-1.5 text-xs font-semibold">
+                    <button onclick="selectCandidate('STORE_02')" id="btn-cand-STORE_02" class="p-1.5 rounded-lg bg-red-950/80 border-2 border-red-500 text-red-200 transition text-left flex flex-col justify-between shadow">
+                        <span class="text-[10px] font-bold block truncate">Fulton Hub</span>
+                        <span class="text-[8px] text-red-300">420m Near</span>
                     </button>
-                    <button onclick="selectCandidate('STORE_05')" id="btn-cand-STORE_05" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between">
-                        <div>
-                            <span class="block text-[11px] font-bold">Flatiron Tech</span>
-                            <span class="text-[9px] text-gray-400 font-normal">Midtown Cluster</span>
-                        </div>
-                        <span class="text-xs">✅</span>
+                    <button onclick="selectCandidate('STORE_05')" id="btn-cand-STORE_05" class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex flex-col justify-between">
+                        <span class="text-[10px] font-bold block truncate">Flatiron</span>
+                        <span class="text-[8px] text-gray-400">Midtown Tech</span>
                     </button>
-                    <button onclick="selectCandidate('STORE_04')" id="btn-cand-STORE_04" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between">
-                        <div>
-                            <span class="block text-[11px] font-bold">Union Square</span>
-                            <span class="text-[9px] text-gray-400 font-normal">Transit Plaza</span>
-                        </div>
-                        <span class="text-xs">⚠️</span>
+                    <button onclick="selectCandidate('STORE_04')" id="btn-cand-STORE_04" class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex flex-col justify-between">
+                        <span class="text-[10px] font-bold block truncate">Union Sq</span>
+                        <span class="text-[8px] text-gray-400">Transit Plaza</span>
                     </button>
-                    <button onclick="selectCandidate('STORE_07')" id="btn-cand-STORE_07" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between">
-                        <div>
-                            <span class="block text-[11px] font-bold">Hudson Yards</span>
-                            <span class="text-[9px] text-gray-400 font-normal">Corporate Luxury</span>
-                        </div>
-                        <span class="text-xs">✅</span>
+                    <button onclick="selectCandidate('STORE_07')" id="btn-cand-STORE_07" class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex flex-col justify-between">
+                        <span class="text-[10px] font-bold block truncate">Hudson Yds</span>
+                        <span class="text-[8px] text-gray-400">Luxury Hub</span>
                     </button>
                 </div>
 
-                <!-- Active Candidate Diagnostic Details -->
-                <div id="cannibalization-card" class="bg-slate-950/90 rounded-xl p-3.5 border border-red-500/40 flex flex-col gap-2.5">
+                <!-- Candidate Evaluation Card -->
+                <div id="cannibalization-card" class="bg-slate-950/90 rounded-lg p-2.5 border border-red-500/40 flex flex-col gap-2">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs text-gray-400 font-medium">Candidate Location:</span>
-                        <span id="target-name" class="text-xs font-bold text-white">Fulton Transit Concourse</span>
+                        <span class="text-[11px] text-gray-400">Candidate Site:</span>
+                        <span id="target-name" class="text-[11px] font-bold text-white truncate max-w-[220px]">Fulton Transit Concourse</span>
                     </div>
 
-                    <!-- Overlap Progress Bar -->
+                    <!-- Progress Bar -->
                     <div>
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="text-gray-300 font-medium text-[11px]">Customer Overlap (Cannibalization):</span>
-                            <span id="overlap-rate" class="font-extrabold text-red-400 font-mono">97.0%</span>
+                        <div class="flex justify-between text-[10px] mb-0.5">
+                            <span class="text-gray-300 font-medium">Customer Overlap (Cannibalization):</span>
+                            <span id="overlap-rate" class="font-extrabold text-red-400 font-mono">99.8%</span>
                         </div>
-                        <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
-                            <div id="overlap-bar" class="bg-red-500 h-2.5 rounded-full transition-all duration-500" style="width: 97%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Commuter Interception Metrics -->
-                    <div class="grid grid-cols-2 gap-2 text-xs pt-1">
-                        <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
-                            <span class="text-gray-400 text-[10px] block">Morning Commute Intercept</span>
-                            <span id="morning-rate" class="text-red-400 font-bold text-sm font-mono">98.2%</span>
-                            <span class="text-[9px] text-gray-400 block mt-0.5">Stolen from Wall St Flagship</span>
-                        </div>
-                        <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800">
-                            <span class="text-gray-400 text-[10px] block">Net-New Patrons Acquired</span>
-                            <span id="net-new-count" class="text-gray-200 font-bold text-sm font-mono">+510 devices</span>
-                            <span class="text-[9px] text-gray-400 block mt-0.5">Incremental Customers</span>
+                        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                            <div id="overlap-bar" class="bg-red-500 h-2 rounded-full transition-all duration-500" style="width: 99.8%;"></div>
                         </div>
                     </div>
 
-                    <!-- Revenue Dilution Model -->
-                    <div class="bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-xs">
-                        <span class="text-gray-400 text-[10px] block">Estimated Daily Revenue Dilution</span>
-                        <span id="revenue-impact" class="text-red-400 font-bold text-sm font-mono">-$3,672.00 / day</span>
-                        <span class="text-[9px] text-gray-400 block mt-0.5">Substituted from existing store footfall</span>
+                    <!-- Interception & Net-New Metrics -->
+                    <div class="grid grid-cols-2 gap-1.5 text-xs">
+                        <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                            <span class="text-gray-400 text-[9px] block">Morning Commute Intercept</span>
+                            <span id="morning-rate" class="text-red-400 font-bold text-xs font-mono">99.0%</span>
+                            <span class="text-[8px] text-gray-400 block">Stolen from Wall St</span>
+                        </div>
+                        <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                            <span class="text-gray-400 text-[9px] block">Net-New Patrons</span>
+                            <span id="net-new-count" class="text-gray-200 font-bold text-xs font-mono">+510 devices</span>
+                            <span class="text-[8px] text-gray-400 block">Incremental Patrons</span>
+                        </div>
                     </div>
 
-                    <!-- Executive Rationale Recommendation -->
-                    <div id="recommendation-badge" class="p-3 rounded-xl bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2.5 shadow-md">
-                        <span class="text-base">⛔</span>
+                    <!-- Revenue Dilution -->
+                    <div class="bg-slate-900/80 px-2 py-1.5 rounded border border-slate-800 text-xs flex justify-between items-center">
                         <div>
-                            <strong id="badge-title" class="block text-red-200 text-xs font-bold uppercase tracking-wider">REJECT STORE LEASE</strong>
-                            <p id="badge-desc" class="text-[11px] leading-relaxed text-red-200/90 mt-0.5">
-                                Placing Store B intercepts 98.2% of morning commuter patrons walking to Wall St. It cannibalizes existing sales without expanding market share.
+                            <span class="text-gray-400 text-[9px] block">Estimated Daily Revenue Impact</span>
+                            <span id="revenue-impact" class="text-red-400 font-bold text-xs font-mono">-$3,771.00 / day</span>
+                        </div>
+                        <span class="text-[9px] text-gray-500">Substituted Sales</span>
+                    </div>
+
+                    <!-- Recommendation Banner -->
+                    <div id="recommendation-badge" class="p-2 rounded-lg bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2 shadow">
+                        <span id="badge-icon" class="text-sm">⛔</span>
+                        <div>
+                            <strong id="badge-title" class="block text-red-200 text-[10px] font-bold uppercase tracking-wider">REJECT STORE LEASE</strong>
+                            <p id="badge-desc" class="text-[10px] leading-tight text-red-200/90 mt-0.5">
+                                Severe 420m proximity intercepts 99.0% of Wall St morning commuters, cannibalizing revenue.
                             </p>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Diurnal Traffic Comparison Chart -->
-            <div class="glass-card p-3.5 rounded-2xl border border-slate-800 flex-1 flex flex-col gap-2 shadow-xl">
-                <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
+            <!-- Diurnal Traffic Chart (Fills Remaining Vertical Space) -->
+            <div class="glass-card p-2.5 rounded-xl border border-slate-800 flex-1 min-h-0 flex flex-col shadow-xl">
+                <div class="flex items-center justify-between border-b border-slate-800/80 pb-1 shrink-0">
                     <div class="flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
-                        <h2 class="text-xs font-bold text-white uppercase tracking-wider">Diurnal Traffic Across Network</h2>
+                        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                        <h2 class="text-[11px] font-bold text-white uppercase tracking-wider">Diurnal Traffic Across Network</h2>
                     </div>
-                    <span class="text-[10px] font-mono text-gray-400">Unique Devices/Hr</span>
+                    <span class="text-[9px] font-mono text-gray-400">Unique Patrons/Hr</span>
                 </div>
-                <div class="relative flex-1" style="min-height: 160px;">
+                <div class="relative flex-1 min-h-0 w-full pt-1">
                     <canvas id="hourlyChart"></canvas>
                 </div>
             </div>
@@ -344,10 +341,10 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="glass-header px-6 py-2 border-t border-slate-900 text-[11px] text-gray-400 flex justify-between items-center">
-        <span>Infotact Solutions Advanced Data Analytics | Project 2: <strong>GeoPulse Retail Mobility Intelligence</strong></span>
-        <span>Lead Data Analyst: <strong>Sujal Borisa</strong> | Python, Uber H3 Res-9, Parquet & Leaflet</span>
+    <!-- Footer (Height: 22px) -->
+    <footer class="glass-header px-5 h-[22px] border-t border-slate-900 text-[10px] text-gray-400 flex justify-between items-center shrink-0">
+        <span>Infotact Solutions Project 2: <strong>GeoPulse Retail Mobility Intelligence</strong></span>
+        <span>Lead Analyst: <strong>Sujal Borisa</strong> | Python, Uber H3 Spatial Indexing & Leaflet</span>
     </footer>
 
     <!-- Application Script -->
@@ -428,10 +425,10 @@
                     pointToLayer: function(feature, latlng) {
                         const isExisting = feature.properties.status === 'EXISTING';
                         return L.circleMarker(latlng, {
-                            radius: isExisting ? 9 : 7,
+                            radius: isExisting ? 8 : 6.5,
                             fillColor: feature.properties.color,
                             color: '#ffffff',
-                            weight: 2,
+                            weight: 1.5,
                             opacity: 1,
                             fillOpacity: 0.95
                         });
@@ -462,19 +459,20 @@
                 L.geoJSON(h3GeoJSON, {
                     style: function(feature) {
                         return {
-                            color: '#1e293b',
-                            weight: 0.5,
+                            color: '#38bdf8',
+                            weight: 0.6,
+                            opacity: 0.6,
                             fillColor: feature.properties.fill_color,
-                            fillOpacity: 0.65
+                            fillOpacity: 0.70
                         };
                     },
                     onEachFeature: function(feature, layer) {
                         layer.bindTooltip(`
                             <div class="text-[11px] font-mono text-slate-900">
                                 <strong>H3 Hexagon: ${feature.properties.h3_index.substring(0, 8)}...</strong><br>
-                                Footfall Pings: <strong>${feature.properties.pings_count || feature.properties.total_pings}</strong><br>
-                                Unique Patrons: <strong>${feature.properties.unique_devices}</strong><br>
-                                Density: <strong>${(feature.properties.intensity * 100).toFixed(0)}%</strong>
+                                Footfall Pings: <strong>${(feature.properties.pings_count || feature.properties.total_pings).toLocaleString()}</strong><br>
+                                Unique Patrons: <strong>${(feature.properties.unique_devices).toLocaleString()}</strong><br>
+                                Density Index: <strong>${(feature.properties.intensity * 100).toFixed(0)}%</strong>
                             </div>
                         `, { sticky: true });
                     }
@@ -507,14 +505,14 @@
             const evalData = cannibalizationData.candidate_evaluations[candidateId];
             if (!evalData) return;
 
-            // Reset all tab styling
+            // Highlight active candidate tab
             ['STORE_02', 'STORE_05', 'STORE_04', 'STORE_07'].forEach(cid => {
                 const btn = document.getElementById(`btn-cand-${cid}`);
                 if (btn) {
                     if (cid === candidateId) {
-                        btn.className = "p-2 rounded-xl bg-slate-800 border-2 border-cyan-400 text-white transition text-left flex items-center justify-between shadow-lg";
+                        btn.className = "p-1.5 rounded-lg bg-slate-800 border-2 border-cyan-400 text-white transition text-left flex flex-col justify-between shadow-lg";
                     } else {
-                        btn.className = "p-2 rounded-xl bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex items-center justify-between";
+                        btn.className = "p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-gray-400 hover:text-gray-200 transition text-left flex flex-col justify-between";
                     }
                 }
             });
@@ -524,43 +522,53 @@
             document.getElementById('overlap-bar').style.width = `${Math.min(100, evalData.overlap_pct)}%`;
             document.getElementById('morning-rate').innerText = `${evalData.morning_intercept_pct}%`;
             document.getElementById('net-new-count').innerText = `+${evalData.net_new_patrons.toLocaleString()} devices`;
-            document.getElementById('revenue-impact').innerText = `-$${evalData.revenue_dilution_usd.toLocaleString()} / day`;
 
-            const card = document.getElementById('cannibalization-card');
             const badge = document.getElementById('recommendation-badge');
+            const badgeIcon = document.getElementById('badge-icon');
             const badgeTitle = document.getElementById('badge-title');
             const badgeDesc = document.getElementById('badge-desc');
 
             if (evalData.overlap_pct > 50) {
+                // Severe Cannibalization
                 document.getElementById('overlap-rate').className = "font-extrabold text-red-400 font-mono";
-                document.getElementById('overlap-bar').className = "bg-red-500 h-2.5 rounded-full transition-all duration-500";
-                document.getElementById('morning-rate').className = "text-red-400 font-bold text-sm font-mono";
-                document.getElementById('revenue-impact').className = "text-red-400 font-bold text-sm font-mono";
-                badge.className = "p-3 rounded-xl bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2.5 shadow-md";
-                badgeTitle.className = "block text-red-200 text-xs font-bold uppercase tracking-wider";
+                document.getElementById('overlap-bar').className = "bg-red-500 h-2 rounded-full transition-all duration-500";
+                document.getElementById('morning-rate').className = "text-red-400 font-bold text-xs font-mono";
+                document.getElementById('revenue-impact').innerText = `-$${evalData.revenue_dilution_usd.toLocaleString()} / day`;
+                document.getElementById('revenue-impact').className = "text-red-400 font-bold text-xs font-mono";
+
+                badge.className = "p-2 rounded-lg bg-red-950/80 border border-red-500 text-xs text-red-300 flex items-start gap-2 shadow";
+                badgeIcon.innerText = "⛔";
+                badgeTitle.className = "block text-red-200 text-[10px] font-bold uppercase tracking-wider";
                 badgeTitle.innerText = evalData.verdict_badge;
-                badgeDesc.className = "text-[11px] leading-relaxed text-red-200/90 mt-0.5";
+                badgeDesc.className = "text-[10px] leading-tight text-red-200/90 mt-0.5";
                 badgeDesc.innerText = evalData.rationale;
             } else if (evalData.overlap_pct > 20) {
+                // Moderate Overlap
                 document.getElementById('overlap-rate').className = "font-extrabold text-amber-400 font-mono";
-                document.getElementById('overlap-bar').className = "bg-amber-500 h-2.5 rounded-full transition-all duration-500";
-                document.getElementById('morning-rate').className = "text-amber-400 font-bold text-sm font-mono";
-                document.getElementById('revenue-impact').className = "text-amber-400 font-bold text-sm font-mono";
-                badge.className = "p-3 rounded-xl bg-amber-950/80 border border-amber-500 text-xs text-amber-300 flex items-start gap-2.5 shadow-md";
-                badgeTitle.className = "block text-amber-200 text-xs font-bold uppercase tracking-wider";
+                document.getElementById('overlap-bar').className = "bg-amber-500 h-2 rounded-full transition-all duration-500";
+                document.getElementById('morning-rate').className = "text-amber-400 font-bold text-xs font-mono";
+                document.getElementById('revenue-impact').innerText = `-$${evalData.revenue_dilution_usd.toLocaleString()} / day`;
+                document.getElementById('revenue-impact').className = "text-amber-400 font-bold text-xs font-mono";
+
+                badge.className = "p-2 rounded-lg bg-amber-950/80 border border-amber-500 text-xs text-amber-300 flex items-start gap-2 shadow";
+                badgeIcon.innerText = "⚠️";
+                badgeTitle.className = "block text-amber-200 text-[10px] font-bold uppercase tracking-wider";
                 badgeTitle.innerText = evalData.verdict_badge;
-                badgeDesc.className = "text-[11px] leading-relaxed text-amber-200/90 mt-0.5";
+                badgeDesc.className = "text-[10px] leading-tight text-amber-200/90 mt-0.5";
                 badgeDesc.innerText = evalData.rationale;
             } else {
+                // Approved Clean Expansion
                 document.getElementById('overlap-rate').className = "font-extrabold text-emerald-400 font-mono";
-                document.getElementById('overlap-bar').className = "bg-emerald-500 h-2.5 rounded-full transition-all duration-500";
-                document.getElementById('morning-rate').className = "text-emerald-400 font-bold text-sm font-mono";
-                document.getElementById('revenue-impact').className = "text-emerald-400 font-bold text-sm font-mono";
+                document.getElementById('overlap-bar').className = "bg-emerald-500 h-2 rounded-full transition-all duration-500";
+                document.getElementById('morning-rate').className = "text-emerald-400 font-bold text-xs font-mono";
                 document.getElementById('revenue-impact').innerText = "+$5,200.00 / day (Net Incremental)";
-                badge.className = "p-3 rounded-xl bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-300 flex items-start gap-2.5 shadow-md";
-                badgeTitle.className = "block text-emerald-200 text-xs font-bold uppercase tracking-wider";
+                document.getElementById('revenue-impact').className = "text-emerald-400 font-bold text-xs font-mono";
+
+                badge.className = "p-2 rounded-lg bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-300 flex items-start gap-2 shadow";
+                badgeIcon.innerText = "✅";
+                badgeTitle.className = "block text-emerald-200 text-[10px] font-bold uppercase tracking-wider";
                 badgeTitle.innerText = evalData.verdict_badge;
-                badgeDesc.className = "text-[11px] leading-relaxed text-emerald-200/90 mt-0.5";
+                badgeDesc.className = "text-[10px] leading-tight text-emerald-200/90 mt-0.5";
                 badgeDesc.innerText = evalData.rationale;
             }
         }
@@ -587,8 +595,8 @@
                                 data: s01,
                                 borderColor: '#10b981',
                                 tension: 0.35,
-                                borderWidth: 2.2,
-                                pointRadius: 1.5
+                                borderWidth: 2,
+                                pointRadius: 1
                             },
                             {
                                 label: 'Fulton (Cannibal)',
@@ -597,15 +605,15 @@
                                 borderDash: [4, 4],
                                 tension: 0.35,
                                 borderWidth: 1.8,
-                                pointRadius: 1.5
+                                pointRadius: 1
                             },
                             {
                                 label: 'Flatiron Tech',
                                 data: s05,
                                 borderColor: '#3b82f6',
                                 tension: 0.35,
-                                borderWidth: 2,
-                                pointRadius: 1.5
+                                borderWidth: 1.8,
+                                pointRadius: 1
                             },
                             {
                                 label: 'Times Sq Hub',
@@ -613,7 +621,7 @@
                                 borderColor: '#f59e0b',
                                 tension: 0.35,
                                 borderWidth: 1.8,
-                                pointRadius: 1.5
+                                pointRadius: 1
                             }
                         ]
                     },
@@ -629,11 +637,11 @@
                         scales: {
                             x: {
                                 grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                                ticks: { color: '#64748b', font: { size: 9 }, maxTicksLimit: 8 }
+                                ticks: { color: '#64748b', font: { size: 8 }, maxTicksLimit: 8 }
                             },
                             y: {
                                 grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                                ticks: { color: '#64748b', font: { size: 9 } }
+                                ticks: { color: '#64748b', font: { size: 8 } }
                             }
                         }
                     }
@@ -655,16 +663,16 @@
             const tag = document.getElementById('commute-tag');
             if (currentHour >= 7 && currentHour <= 9) {
                 tag.innerText = "Morning Commute Rush (Wall St Influx)";
-                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-amber-950 text-amber-300 border border-amber-500/40";
+                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-950 text-amber-300 border border-amber-500/40";
             } else if (currentHour >= 11 && currentHour <= 14) {
                 tag.innerText = "Lunch Footfall Peak";
-                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40";
+                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40";
             } else if (currentHour >= 17 && currentHour <= 19) {
                 tag.innerText = "Evening Commuter Flow";
-                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-cyan-950 text-cyan-300 border border-cyan-500/40";
+                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-950 text-cyan-300 border border-cyan-500/40";
             } else {
                 tag.innerText = "Normal / Off-Peak Hours";
-                tag.className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-slate-800 text-slate-400 border border-slate-700";
+                tag.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-400 border border-slate-700";
             }
 
             loadH3Layer(currentHour);
@@ -677,14 +685,14 @@
 
             if (isPlaying) {
                 icon.innerText = "⏸ Pause Wave";
-                btn.className = "bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-amber-600/20";
+                btn.className = "bg-amber-600 hover:bg-amber-500 text-white px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1 text-[11px] shadow transition";
                 playInterval = setInterval(() => {
                     let nextHour = (currentHour + 1) % 24;
                     updateTimelineHour(nextHour);
                 }, 1200);
             } else {
                 icon.innerText = "▶ Play 24H Wave";
-                btn.className = "bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg font-semibold flex items-center gap-1.5 transition text-xs shadow-md shadow-cyan-600/20";
+                btn.className = "bg-cyan-600 hover:bg-cyan-500 text-white px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1 text-[11px] shadow transition";
                 clearInterval(playInterval);
             }
         }
@@ -707,7 +715,7 @@
                 if (isPlaying) togglePlay();
                 document.getElementById('display-time').innerText = "ALL-DAY (24H)";
                 document.getElementById('commute-tag').innerText = "Cumulative Citywide Footfall";
-                document.getElementById('commute-tag').className = "px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30";
+                document.getElementById('commute-tag').className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-500/30";
                 loadH3Layer('allday');
             });
         });
