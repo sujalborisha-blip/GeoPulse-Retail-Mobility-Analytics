@@ -268,6 +268,9 @@
                             Circular 500m Walkable Customer Catchments &middot; Uber H3 Hexagon Density
                         </p>
                     </div>
+                    <button id="btn-recenter" title="Recenter on Manhattan Island" class="ml-1 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-700/60 px-2 py-0.5 rounded text-[9.5px] font-mono font-bold flex items-center gap-1 transition shadow cursor-pointer">
+                        <span>🎯 Reset Focus</span>
+                    </button>
                 </div>
 
                 <!-- Floating Top-Right Layer Selector -->
@@ -504,6 +507,13 @@
             map = L.map('map', {
                 center: [40.7320, -73.9980],
                 zoom: 13,
+                minZoom: 12,
+                maxZoom: 16,
+                maxBounds: [
+                    [40.6600, -74.0700], // South-West
+                    [40.8200, -73.9100]  // North-East
+                ],
+                maxBoundsViscosity: 0.9,
                 zoomControl: true
             });
 
@@ -535,6 +545,13 @@
                     if (show) marker.openTooltip();
                     else marker.closeTooltip();
                 });
+            });
+            document.getElementById('btn-recenter').addEventListener('click', () => {
+                if (storeMarkerGroup.getLayers().length > 0) {
+                    map.fitBounds(storeMarkerGroup.getBounds().pad(0.08), { animate: true });
+                } else {
+                    map.setView([40.7320, -73.9980], 13, { animate: true });
+                }
             });
         }
 
@@ -623,6 +640,11 @@
                         `);
                     }
                 }).addTo(storeMarkerGroup);
+
+                // Auto-fit view tightly to Manhattan stores network
+                if (storeMarkerGroup.getLayers().length > 0) {
+                    map.fitBounds(storeMarkerGroup.getBounds().pad(0.08));
+                }
 
             } catch (err) {
                 console.error("Error loading stores/catchments:", err);
