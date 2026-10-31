@@ -19,6 +19,10 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 def index():
     return render_template("index.html", geo_bounds=GEO_BOUNDS, stores=STORES)
 
+@app.route("/resume")
+def resume():
+    return render_template("resume.html")
+
 @app.route("/api/kpis")
 def get_kpis():
     summary_file = DATA_DIR / "store_footfall_summary.json"
